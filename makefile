@@ -7,7 +7,7 @@ dev_env: FORCE
 
 tests: FORCE
 	$(PYLINT) *.py
-	nosetests hello.py --exe --with-coverage --verbose --cover-package=SoftEng
+	nosetests hello.py --exe --with-coverage --verbose --cover-package=SeniorDesign
 
 deploy:
 	python ./venv/app/app.py
