@@ -1,0 +1,54 @@
+<html>
+<head>
+    <style type="text/css">
+		table, th, tr, form{
+			border: 1px solid black;
+
+		}
+		<style>
+		/* Tooltip container */
+		.tooltip {
+		  position: relative;
+		  display: inline-block;
+		  border-bottom: 1px dotted black;
+		}
+
+		/* Tooltip text */
+		.tooltip .tooltiptext {
+		  visibility: hidden;
+		  width: 200px;
+		  background-color: black;
+		  color: #fff;
+		  text-align: center;
+		  padding: 5px 0;
+		  border-radius: 6px;
+
+		  /* Position the tooltip text - see examples below! */
+		  position: absolute;
+		  z-index: 1;
+		}
+
+		/* Show the tooltip text when you mouse over the tooltip container */
+		.tooltip:hover .tooltiptext {
+		  visibility: visible;
+		}
+		#friendGroup {
+            border: 1px solid black;
+        }
+        .error {
+            border: 5px solid black;
+        }
+        #nameAnalytics, #num-reactions {
+            width: 100px;
+            height: 50px;
+        }
+	</style>
+</head>
+<body>
+    <h1>Welcome {{username}}</h1> 
+<br>
+<a href="/logout">Logout</a>
+
+</body>
+
+</html>

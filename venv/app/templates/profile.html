@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <meta charset="utf-8" />
+    <title>Welcome User!</title>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #9494b8;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        img {
+            max-width: 30%;
+            max-height: 30%;
+        }
+
+        .menu {
+            float: left;
+            width: 20%;
+            height: 80%;
+            padding-right: 3%;
+            border-style: inset;
+            border-width: 10px;
+        }
+
+        .stock {
+            float: left;
+            padding-right: 3%;
+            /*align-self: center;*/
+            width: 30%;
+            height: 80%;
+            /*position: absolute;*/
+            border-style: inset;
+            border-width: 10px;
+            /*padding-left: 50%;*/
+        }
+
+        .news {
+            float: left;
+            border-style: inset;
+            border-width: 10px;
+            /*position: absolute;*/
+            width: 40%;
+            height:80%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to your Profile!</h1>
+    <div class="menu">
+        <h2 style="text-align:center;">What would you like to do with your portfolio?</h2>
+        <ul style="font-size:20px;">
+            <li>View My Stocks</li>
+            <li>Seaarch Stocks</li>
+            <li>View My Crypto Wallet</li>
+            <li>Search News</li>
+            <li>Market Projections</li>
+            <li>Manage Account Stocks</li>
+            <li><a href="/">Log Out</a></li>
+        </ul>
+    </div>
+
+    <div class="stock">
+        <h2 style="text-align:center;"><strong>Your Top Stocks</strong></h2>
+        <div>
+            <ul>
+                <li><img src="{{url_for('static', filename='stock1.png')}}" alt="Stock 1" style="max-height:75%; max-width:75%; align-content:center;" /></li>
+                <li><img src="{{url_for('static', filename='stock2.png')}}" alt="Stock 2" style="max-height:75%; max-width:75%;" /></li>
+                <li><img src="{{url_for('static', filename='stock3.jpg')}}" alt="Stock 3" style="max-height:75%; max-width:75%;" /></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="news">
+        <h2 style="text-align:center;"><strong>Stock News You Can Use</strong></h2>
+        <dl style="font-size:20px;">
+            <dt>
+                <a href="https://finance.yahoo.com/m/b8a7bd61-5e25-386b-8bcd-cdd4356a8824/what-does-inflation-mean-for.html" target="_blank" rel="noopener noreferrer">
+                    Inflation and the Stock Market
+                </a>
+            </dt>
+            <dd>
+                Inflation is typically a good thing for stocks - so why is it scaring investors now?<br />
+                <img src="{{url_for('static', filename='inflation.jpg')}}" alt="Inflation is looming" style="padding-left: 30%;" />
+            </dd>
+            <dt>
+                <a href="https://finance.yahoo.com/m/013f3a26-06d7-3bb6-8811-ddbc901f9eec/these-are-the-best-robinhood.html" target="_blank" rel="noopener noreferrer">
+                    Stocks to Stalk
+                </a>
+            </dt>
+            <dd>
+                These Robinhood stocks are getting a lot of attention right now. Maybe one would fit your portfolio.<br />
+                <img src="{{url_for('static', filename='robinhood.jpg')}}" alt="Robinhood App" style="padding-left: 30%;" />
+            </dd>
+            <dt>
+                <a href="https://finance.yahoo.com/m/b09c9575-8abd-3f64-9e18-3aa6fe6e470e/fake-meat-is-here-to-stay-.html" target="_blank" rel="noopener noreferrer">
+                    There's Real Money in Faux-Meats
+                </a>
+            </dt>
+            <dd>
+                Here are some stocks to get your cut.<br />
+                <img src="{{url_for('static', filename='plant_meat.jpg')}}" alt="Beyond Beef vs Impossible Burger" style="padding-left: 30%;" />
+            </dd>
+
+        </dl>
+    </div>
+
+</body>
+ 
+</html>
