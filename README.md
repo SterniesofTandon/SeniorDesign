@@ -2,20 +2,33 @@
 
 ## Overall Description
 
-  - A platform that allows a user to a company (such as Amazon) to not have their personal information leaked. This includes: names, addresses, credit card numbers, etc. These items will be encrypted, only the user has direct access to this. This will help with identify theft: https://www.fastcompany.com/3055875/how-amazons-customer-service-could-open-you-up-to-identity-theft
+  - A platform that allows a user to a company (such as Amazon) to not have their personal information leaked. This includes: names, addresses, credit card numbers, etc.
+       These items will be encrypted, only the user has direct access to this.
+       This will help with identify theft: https://www.fastcompa.com/3055875/how-amazons-customer-service-could-open-you-up-to-identity-theft
 
 ## Actionable Requirements
-  - User AKA Customer Account Creation
-  - User Login
-  - User Access Orders
+
+Client/Customer Side:
+- User AKA Customer Account Creation
+- User Login
+- User Access Orders
+
+Customer Service Representative (CSR) Side:
   - Company Account Creation
   - Company Login
   - Company Access Orders
   - Order information is hashed or anonymized
+  
+  Company Side:
   - Admin Login
   - Admin can manage database and see unencrypted information
-  - Special privilege
-  - testing again
+  - Special and access to information, does not speak to customers
+  - Testing
+  
+  Testing:
+  - CSR cannot see any of the client's personal information
+  - CSR is able to use client's name encrypted, and customer sees their own information
+  - Customer cannot 'break' system (by putting in their encrypted name, unbeknowingly)
 
 ## SetUp 
 Make Prod
@@ -47,7 +60,6 @@ Make Prod
   - Have app.py run (either on CLI or via tests)
   - Located on Port 5000 (or your own defined port)
 
-
 ## Run App 
   - clone repo
   - Go through SetUp 
@@ -55,4 +67,3 @@ Make Prod
   - heroku login 
   - WAMP login for access to database and local host
   - make deploy (or navigate to ./venv and heroku local web)
-
