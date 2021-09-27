@@ -1,12 +1,5 @@
 #heroku 
 # -r ./venv/requirements.txt
 
-# for robinhood.py 
-matplotlib
-numpy
-pandas
-robin-stocks==1.0.0.7
-ta
-
 #
 flask
