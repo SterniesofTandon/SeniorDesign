@@ -32,14 +32,14 @@ Customer Service Representative (CSR) Side:
 
 ## SetUp 
 Make Prod
-  - makes the "make tests" unit tests in the SoftEng repository
+  - makes the "make tests" unit tests in the SeniorDesign repository
   - commits and pushes all modifications
 
   make dev_env
   - Running this will install all of the requirements from the requirements-dev.txt file, requirements.txt and the heroku requirements file. 
 
   make tests 
-  - makes unit tests in the SoftEng repository 
+  - makes unit tests in the SeniorDesign repository 
 
   make deploy
   - runs ./venv/app/app.py which will run MySQL database and Heroku (if logged in)
