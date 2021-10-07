@@ -4,7 +4,7 @@
 
   - A platform that allows a user to a company (such as Amazon) to not have their personal information leaked. This includes: names, addresses, credit card numbers, etc.
        These items will be encrypted, only the user has direct access to this.
-       This will help with identify theft: https://www.fastcompa.com/3055875/how-amazons-customer-service-could-open-you-up-to-identity-theft
+       This will help with identify theft: https://www.fastcompany.com/3055875/how-amazons-customer-service-could-open-you-up-to-identity-theft
 
 ## Actionable Requirements
 
