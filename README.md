@@ -31,7 +31,7 @@ Customer Service Representative (CSR) Side:
   - Customer cannot 'break' system (by putting in their encrypted name, unbeknowingly)
 
 ## SetUp 
-Make Prod
+make prod
   - makes the "make tests" unit tests in the SeniorDesign repository
   - commits and pushes all modifications
 
