@@ -83,7 +83,7 @@ def registerAuth():
         cursor.close()
         return render_template('index.html')
 
-
+#Displays home page
 @app.route('/home')
 def home():
     user = session['username']
@@ -94,7 +94,19 @@ def home():
     cursor.close()
     return render_template('home.html', username=user, posts=data)
 
+@app.route('/logout')
+def logout():
+    session.pop('username')
+    return redirect('/')
         
+app.secret_key = 'somekeythatyouwillneverguess'
+#Run the app on localhost port 5000
+#debug = True -> you don't have to restart flask
+#for changes to go through, TURN OFF FOR PRODUCTION
+if __name__ == "__main__":
+    app.run('127.0.0.1', 5000, debug = True)
+
+'''
 @app.route('/post', methods=['GET', 'POST'])
 def post():
     username = session['username']
@@ -128,15 +140,4 @@ def show_posts():
     data = cursor.fetchall()
     cursor.close()
     return render_template('show_posts.html', poster_name=poster, posts=data)
-
-@app.route('/logout')
-def logout():
-    session.pop('username')
-    return redirect('/')
-        
-app.secret_key = 'some key that you will never guess'
-#Run the app on localhost port 5000
-#debug = True -> you don't have to restart flask
-#for changes to go through, TURN OFF FOR PRODUCTION
-if __name__ == "__main__":
-    app.run('127.0.0.1', 5000, debug = True)
+'''
