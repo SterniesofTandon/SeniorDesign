@@ -30,7 +30,14 @@ Customer Service Representative (CSR) Side:
   - CSR is able to use client's name encrypted, and customer sees their own information
   - Customer cannot 'break' system (by putting in their encrypted name, unbeknowingly)
 
-## SetUp 
+## Admin Deployment SetUp
+- Download and start MAMP
+- Visit http://localhost:8888/MAMP/phpmyadmin.php?lang=en to view current databases
+- Run the following command on the commandline
+  - FLASK_APP=init1.py flask run
+- To view the deployed webserver go to http://127.0.0.1:5000/
+
+## Testing SetUp 
 make prod
   - makes the "make tests" unit tests in the SeniorDesign repository
   - commits and pushes all modifications
