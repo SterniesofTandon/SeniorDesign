@@ -6,6 +6,9 @@ dev_env: FORCE
 	pip3 install -r requirements-dev.txt
 
 tests: FORCE
+	nosetests hello.py --exe --with-coverage --verbose --cover-package=SeniorDesign
+
+linttests: FORCE
 	$(PYLINT) *.py
 	nosetests hello.py --exe --with-coverage --verbose --cover-package=SeniorDesign
 
