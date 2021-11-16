@@ -1,11 +1,11 @@
-#Import Flask Library
+# Import Flask Library
 from flask import Flask, render_template, request, session, url_for, redirect
 import pymysql.cursors
 
-#Initialize the app from Flask
+# Initialize the app from Flask
 app = Flask(__name__)
 
-#Configure MySQL
+# Configure MySQL
 conn = pymysql.connect(host='localhost',
                        port = 8889,
                        user='root',
@@ -14,66 +14,66 @@ conn = pymysql.connect(host='localhost',
                        charset='utf8mb4',
                        cursorclass=pymysql.cursors.DictCursor)
 
-#Define a route to hello function
+# Define a route to hello function
 @app.route('/')
 def hello():
     return render_template('index.html')
 
-#Define route for login
+# Define route for login
 @app.route('/login')
 def login():
     return render_template('login.html')
 
-#Define route for register
+# Define route for register
 @app.route('/register')
 def register():
     return render_template('register.html')
 
-#Authenticates the login
+# Authenticates the login
 @app.route('/loginAuth', methods=['GET', 'POST'])
 def loginAuth():
-    #grabs information from the forms
+    # grabs information from the forms
     username = request.form['username']
     password = request.form['password']
 
-    #cursor used to send queries
+    # cursor used to send queries
     cursor = conn.cursor()
-    #executes query
+    # executes query
     query = 'SELECT * FROM user WHERE username = %s and password = %s'
     cursor.execute(query, (username, password))
-    #stores the results in a variable
+    # stores the results in a variable
     data = cursor.fetchone()
-    #use fetchall() if you are expecting more than 1 data row
+    # use fetchall() if you are expecting more than 1 data row
     cursor.close()
     error = None
     if(data):
-        #creates a session for the the user
-        #session is a built in
+        # creates a session for the the user
+        # session is a built in
         session['username'] = username
         return redirect(url_for('home'))
     else:
-        #returns an error message to the html page
+        # returns an error message to the html page
         error = 'Invalid login or username'
         return render_template('login.html', error=error)
 
-#Authenticates the register
+# Authenticates the register
 @app.route('/registerAuth', methods=['GET', 'POST'])
 def registerAuth():
-    #grabs information from the forms
+    # grabs information from the forms
     username = request.form['username']
     password = request.form['password']
 
-    #cursor used to send queries
+    # cursor used to send queries
     cursor = conn.cursor()
-    #executes query
+    # executes query
     query = 'SELECT * FROM user WHERE username = %s'
     cursor.execute(query, (username))
-    #stores the results in a variable
+    # stores the results in a variable
     data = cursor.fetchone()
-    #use fetchall() if you are expecting more than 1 data row
+    # use fetchall() if you are expecting more than 1 data row
     error = None
     if(data):
-        #If the previous query returns data, then user exists
+        # If the previous query returns data, then user exists
         error = "This user already exists"
         return render_template('register.html', error = error)
     else:
@@ -83,7 +83,7 @@ def registerAuth():
         cursor.close()
         return render_template('index.html')
 
-#Displays home page
+# Displays home page
 @app.route('/home')
 def home():
     user = session['username']
@@ -100,9 +100,9 @@ def logout():
     return redirect('/')
         
 app.secret_key = 'somekeythatyouwillneverguess'
-#Run the app on localhost port 5000
-#debug = True -> you don't have to restart flask
-#for changes to go through, TURN OFF FOR PRODUCTION
+# Run the app on localhost port 5000
+# debug = True -> you don't have to restart flask
+# for changes to go through, TURN OFF FOR PRODUCTION
 if __name__ == "__main__":
     app.run('127.0.0.1', 5000, debug = True)
 
@@ -123,7 +123,7 @@ def select_blogger():
     #check that user is logged in
     #username = session['username']
     #should throw exception if username not found
-    
+
     cursor = conn.cursor();
     query = 'SELECT DISTINCT username FROM blog'
     cursor.execute(query)
