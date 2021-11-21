@@ -38,7 +38,7 @@ def loginAuth():
 
     # cursor used to send queries
     cursor = conn.cursor()
-    # executes query
+    # executes query -> TODO: ADD func called userExists
     query = 'SELECT * FROM user WHERE username = %s and password = %s'
     cursor.execute(query, (username, password))
     # stores the results in a variable
@@ -46,7 +46,7 @@ def loginAuth():
     # use fetchall() if you are expecting more than 1 data row
     cursor.close()
     error = None
-    if(data):
+    if(data): #user exists
         # creates a session for the the user
         # session is a built in
         session['username'] = username
