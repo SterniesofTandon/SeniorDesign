@@ -1,9 +1,12 @@
 # Import Flask Library
 from flask import Flask, render_template, request, session, url_for, redirect
 import pymysql.cursors
+import hashlib
+
 
 # Initialize the app from Flask
 app = Flask(__name__)
+SALT = "sd210699"
 
 # Configure MySQL
 conn = pymysql.connect(host='localhost',
@@ -65,8 +68,8 @@ def registerAuth():
     hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
     #information to be encrypted:
     first_name = request.form['first_name']
-	last_name = request.form['last_name']
-	address = request.form['address']
+    last_name = request.form['last_name']
+    address = request.form['address']
     phone_number = request.form['phone_number']
     card_number = request.form['card_number']
 
