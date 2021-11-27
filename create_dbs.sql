@@ -3,13 +3,11 @@ CREATE TABLE user(
 	username varchar(50),
 	password varchar(50),
     anon_code` varchar(50),
-    '''
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `address` varchar(50) DEFAULT NULL,
   `phone_number` varchar(50) DEFAULT NULL,
   `card_number` varchar(50) DEFAULT NULL
-  '''
 	PRIMARY KEY(username)
 );
 
