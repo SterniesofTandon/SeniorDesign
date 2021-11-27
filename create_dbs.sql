@@ -1,13 +1,12 @@
-'''
 CREATE TABLE user(
 	username varchar(50),
 	password varchar(50),
-    anon_code` varchar(50),
-  `first_name` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) DEFAULT NULL,
-  `address` varchar(50) DEFAULT NULL,
-  `phone_number` varchar(50) DEFAULT NULL,
-  `card_number` varchar(50) DEFAULT NULL
+    anon_code varchar(50),
+    first_name varchar(50),
+	last_name varchar(50),
+    address varchar(50),
+    phone_number varchar(50),
+	card_number varchar(50),
 	PRIMARY KEY(username)
 );
 
@@ -17,9 +16,10 @@ CREATE TABLE blog(
 	ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
 	FOREIGN KEY (username) REFERENCES user(username)
 );
+
+
+
 '''
-
-
 -- phpMyAdmin SQL Dump
 -- version 4.9.7
 -- https://www.phpmyadmin.net/
@@ -70,3 +70,5 @@ INSERT INTO `user` (`username`, `password`, `anon_code`, `first_name`, `last_nam
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`username`);
+
+  '''
