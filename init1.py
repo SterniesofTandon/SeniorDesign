@@ -29,12 +29,12 @@ def hello():
 
 # Make sure user is logged in
 def login_required(func):
-	@wraps(func)
-	def dec(*args, **kwargs):
-		if not 'username' in session:
-			return redirect(url_for("login"))
-		return func(*args, **kwargs)
-	return dec
+    @wraps(func)
+    def dec(*args, **kwargs):
+        if not 'username' in session:
+            return redirect(url_for("login"))
+        return func(*args, **kwargs)
+    return dec
 
 # Define route for login, this can be used by both CSR and customer
 @app.route('/login')
@@ -157,111 +157,117 @@ def registerAuthCSR():
 @app.route('/home')
 def home():
     user = session['username']
-    cursor = conn.cursor();
+    cursor = conn.cursor()
     query = 'SELECT ts, blog_post FROM blog WHERE username = %s ORDER BY ts DESC'
     cursor.execute(query, (user))
     data = cursor.fetchall()
+
+    query2 = "SELECT first_name FROM user WHERE username = %s"
+    # cursor = conn.cursor().execute(query2, user)
+    name = conn.cursor().execute(query2, user)
+    name = cursor.fetchall() #TODO: Fix; Only displays 1
+    
     cursor.close()
-    return render_template('home.html', username=user, posts=data)
+    return render_template('home.html', username=user, posts=data, names=name)
 
 # Upload an order
 @app.route("/upload")
 @login_required
 def upload():
-	query = "SELECT groupName, groupCreator FROM BelongTo WHERE username = %s"
-	with conn.cursor() as cursor:
-		cursor.execute(query, (session["username"]))
-	data = cursor.fetchall()
-	return render_template("upload.html", groups = data)
+    query = "SELECT groupName, groupCreator FROM BelongTo WHERE username = %s"
+    with conn.cursor() as cursor:
+        cursor.execute(query, (session["username"]))
+    data = cursor.fetchall()
+    return render_template("upload.html", groups = data)
 
-@app.route("/uploadPhoto", methods=["GET", "POST"])
+@app.route("/uploadOrder", methods=["GET", "POST"])
 @login_required
-def uploadPhoto():
-	if request.files:
-		image_file = request.files.get("imageToUpload", "")
-		image_name = image_file.filename
-		filePath = os.path.join(IMAGES_DIR, image_name)
-		image_file.save(filePath) 
+def uploadOrder():
+    if request.files:
+        image_file = request.files.get("imageToUpload", "")
+        image_name = image_file.filename
+        filePath = os.path.join(IMAGES_DIR, image_name)
+        image_file.save(filePath) 
 
-		userName = session["username"]
-		caption = request.form.get('caption')
-		display = request.form.get('display')
+        userName = session["username"]
+        caption = request.form.get('caption')
+        display = request.form.get('display')
 
-		#Post to all followers
-		if True:
-			query = "INSERT INTO Photo (postingDate, filePath, caption, poster) " \
-					"VALUES (%s, %s, %s, %s)"
-			with conn.cursor() as cursor:
-				cursor.execute(query, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, userName))
-				conn.commit()
-				cursor.close()
+        #Post to all followers
+        if True:
+            query = "INSERT INTO Order (postingDate, filePath, caption, poster) " \
+                    "VALUES (%s, %s, %s, %s)"
+            with conn.cursor() as cursor:
+                cursor.execute(query, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, userName))
+                conn.commit()
+                cursor.close()
 
-		message = "photo successfully uploaded."
-		return render_template("upload.html", message=message)
+        message = "Order successfully uploaded."
+        return render_template("upload.html", message=message)
 
-	else:
-		message = "Failed to upload photo"
-		return render_template("upload.html", message=message)
+    else:
+        message = "Failed to upload order"
+        return render_template("upload.html", message=message)
 
-# View photos (SEVERAL PARTS)
-@app.route("/photos", methods = ["GET"])
+# View orders (SEVERAL PARTS)
+@app.route("/orders", methods = ["GET"])
 @login_required
-def photos(): 
-	user = session["username"]
-	cursor = conn.cursor()
-	query = "SELECT pID, poster FROM Photo ORDER BY postingDate DESC"
-	cursor.execute(query)
-	photos = cursor.fetchall()
-	cursor.close()
-	return render_template("photos.html", photos = photos)
+def orders(): 
+    user = session["username"]
+    cursor = conn.cursor()
+    query = "SELECT pID, poster, filePath FROM Order ORDER BY postingDate DESC"
+    cursor.execute(query)
+    photos = cursor.fetchall()
+    cursor.close()
+    
+    return render_template("orders.html", photos = photos)
 
-@app.route("/viewPhotos/<int:pID>", methods=["GET", "POST"])
+@app.route("/viewOrders/<int:pID>", methods=["GET", "POST"])
 @login_required
-def viewPhotos(pID):
-	user = session["username"]
-	
-	#query for pID, filePath, postingDate
-	cursor = conn.cursor()
-	query = "SELECT pID, postingDate, filePath FROM Photo WHERE pID = %s"
-	cursor.execute(query, (pID))
-	data = cursor.fetchall()
+def viewOrders(pID):
+    user = session["username"]
+    
+    #query for pID, filePath, postingDate
+    cursor = conn.cursor()
+    query = "SELECT pID, postingDate, filePath FROM Order WHERE pID = %s"
+    cursor.execute(query, (pID))
+    data = cursor.fetchall()
 
-	#first and last name of the poster 
-	query2 = "SELECT first_name, last_name FROM user WHERE username = %s"
-	cursor = conn.cursor()
-	cursor.execute(query2, (user))
-	name = cursor.fetchall()
+    #first and last name of the poster 
+    query2 = "SELECT first_name, last_name FROM user WHERE username = %s"
+    cursor = conn.cursor()
+    cursor.execute(query2, (user))
+    name = cursor.fetchall()
 
-    #username of people who ReactedTo the photo
-	query4 = "SELECT username, comment FROM ReactTo WHERE pID = %s "
-	cursor = conn.cursor()
-	cursor.execute(query4, (pID))
-	comment = cursor.fetchall()
+    #username of people who Reacted
+    query4 = "SELECT username, reactionTime, comment FROM ReactTo WHERE pID = %s "
+    cursor = conn.cursor()
+    cursor.execute(query4, (pID))
+    comment = cursor.fetchall()
 
-	return render_template("viewPhotos.html", photos = data, names = name, comments = comment)
+    return render_template("viewOrders.html", photos = data, names = name, comments = comment)
 
 @app.route("/photo/<image_name>", methods=["GET"])
 def image(image_name):
-	image_location = os.path.join(IMAGES_DIR, image_name)
-	if os.path.isfile(image_location):
-		return send_file(image_location, mimetype="image/jpg")
+    image_location = os.path.join(IMAGES_DIR, image_name)
+    if os.path.isfile(image_location):
+        return send_file(image_location, mimetype="image/jpg")
 
 @app.route("/comment/<pID>", methods=["GET", "POST"])
 @login_required
 def comment(pID):
-	cursor = conn.cursor()
+    cursor = conn.cursor()
 
-	if(request.form): 	
-		user = session["username"]
-		comment = request.form["comment"]
-	
-		query = "INSERT INTO ReactTo (username, pID, reactionTime, comment) VALUES (%s, %s, %s, %s)"
-		cursor.execute(query, (user, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
-		return redirect(url_for('viewPhotos', pID = pID))
-		
-	
-	cursor.close()
-	return redirect(url_for('home'))
+    if(request.form): 	
+        user = session["username"]
+        comment = request.form["comment"]
+    
+        query = "INSERT INTO ReactTo (username, pID, reactionTime, comment) VALUES (%s, %s, %s, %s)"
+        cursor.execute(query, (user, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
+        return redirect(url_for('viewOrders', pID = pID))
+        
+    cursor.close()
+    return redirect(url_for('home'))
 
 @app.route('/logout')
 def logout():

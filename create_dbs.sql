@@ -28,19 +28,28 @@ CREATE TABLE ReactTo (
         pID INT,
         reactionTime DATETIME,
         comment VARCHAR(1000),    
-	      PRIMARY KEY (comment),
-        FOREIGN KEY (pID) REFERENCES Photo (pID),
+	      PRIMARY KEY (reactionTime),
+        FOREIGN KEY (pID) REFERENCES Order (pID),
         FOREIGN KEY (username) REFERENCES user (username)
 );
 
-CREATE TABLE Photo (
+CREATE TABLE Order (
         pID INT AUTO_INCREMENT,
         postingDate DATETIME,
         filePath VARCHAR(255),
         caption VARCHAR(1000),
         poster VARCHAR(32),
-        PRIMARY KEY (pID),
-        FOREIGN KEY (poster) REFERENCES user (username)
+        -- PRIMARY KEY (pID),
+        -- FOREIGN KEY (poster) REFERENCES user (username)
+);
+
+CREATE TABLE Follow(
+        follower VARCHAR(32),
+        followee VARCHAR(32),
+        followStatus INT,
+        PRIMARY KEY (follower, followee),
+        FOREIGN KEY (follower) REFERENCES user (username),
+        FOREIGN KEY (followee) REFERENCES user (username)
 );
 
 '''

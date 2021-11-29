@@ -4,18 +4,16 @@
 
    
 
-    <h1>Photos</h1>
+    <h1>Orders</h1>
     <table border="1">
-        <th>pID</th>
-        <th> url </th>
-        <th> poster </th>
+        <th>Order #</th>
+        <th> Order Information </th>
 
     {% for photo in photos %}
         
         <tr>
             <td>{{photo.pID}}</td>
-            <td><a href="/viewPhotos/{{photo.pID}}">{{photo.pID}}</a></td>
-            <td>{{photo.poster}}</td>
+            <td><a href="/viewOrders/{{photo.pID}}">Page</a></td>
         </tr>
            
        

@@ -5,7 +5,7 @@
     <body text= "black" >
         <h3>Upload an Order</h3>
         <div>
-            <form action="/uploadPhoto" method="post" enctype="multipart/form-data">
+            <form action="/uploadOrder" method="post" enctype="multipart/form-data">
                 <input type="file" name="imageToUpload" accept="image/*">
                 <br/>
                 <p><input type = "text" name = "caption" placeholder="Enter the order number"></p>
@@ -18,7 +18,7 @@
                 {% endfor %}
                 </select>
                 <br/> -->
-                <p><input type="submit" value="Post"></p>
+                <p><input type="submit" value="Submit"></p>
 
             </form>
         </div>
