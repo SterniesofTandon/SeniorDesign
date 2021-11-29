@@ -6,12 +6,12 @@
 <form action="/registerAuth" method="POST">
 	<input type="text" name = "username" placeholder="username" required/> </br>
     <input type="text" name = "name" placeholder="Full Name" required/></br>
-	<input type="password" name = "password" placeholder="password" required/></br>
-    <input type="first_name" name = "first_name" placeholder="first_name" required/></br>
-    <input type="last_name" name = "last_name" placeholder="last_name" required/></br>
-    <input type="address" name = "address" placeholder="address" required/></br>
-    <input type="phone_number" name = "phone_number" placeholder="phone_number" required/></br>
-    <input type="card_number" name = "card_number" placeholder="card_number" required/></br>
+	<input type="text" name = "pwd" placeholder="password" required/></br>
+    <input type="text" name = "first_name" placeholder="first_name" required/></br>
+    <input type="text" name = "last_name" placeholder="last_name" required/></br>
+    <input type="text" name = "addr" placeholder="address" required/></br>
+    <input type="text" name = "phone_number" placeholder="phone_number" required/></br>
+    <input type="text" name = "card_number" placeholder="card_number" required/></br>
 	<input type="submit" value = Register />
 	{% if error %}
 		<p class="error"><strong>Error:</strong> {{error}}</p>
