@@ -103,7 +103,6 @@ def loginAuthCSR():
     # grabs information from the forms
     username = request.form['username']
     pwd = request.form['pwd']
-
     # cursor used to send queries
     cursor = conn.cursor()
     # executes query -> TODO: ADD func called userExists
@@ -124,7 +123,6 @@ def loginAuthCSR():
         error = 'Invalid login or username'
         return render_template('loginCSR.html', error=error)
 
-
 """ 
 Registers the customer
 """
@@ -143,6 +141,13 @@ def registerAuth():
     phone_number = request.form['phone_number']
     card_number = request.form['card_number']
     #we have to generate anon code
+    key_str = "08242007"
+    anon_codeE = anon_code
+    first_nameE = first_name
+    last_nameE = last_name
+    addrE = addr
+    phone_numberE = phone_number
+    card_numberE = card_number
 
     # cursor used to send queries
     cursor = conn.cursor()
@@ -161,6 +166,10 @@ def registerAuth():
     else:
         ins = '''INSERT INTO user VALUES(%s, %s, %s, %s, %s, %s, %s, %s)'''
         cursor.execute(ins, (username, pwd, anon_code, first_name, last_name, addr, phone_number, card_number))
+        #insert all the encrypted data
+        insE = '''INSERT INTO userE VALUES(AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"), 
+        AES_ENCRYPT(%s,"08242007"), AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"))'''
+        cursor.execute(insE, (anon_codeE, first_nameE, last_nameE, addrE, phone_numberE, card_numberE))
         conn.commit()
         cursor.close()
         return render_template('login.html')

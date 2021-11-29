@@ -10,14 +10,14 @@ CREATE TABLE user(
 	PRIMARY KEY(anon_code)
 );
 
-CREATE TABLE userEncrypted(
-    anon_code varchar(50),
-    first_name varchar(50),
-	last_name varchar(50),
-    addr varchar(50),
-    phone_number varchar(50),
-	card_number varchar(50),
-	PRIMARY KEY(anon_code)
+CREATE TABLE userE(
+    anon_codeE varchar(50),
+    first_nameE varchar(50),
+	last_nameE varchar(50),
+    addrE varchar(50),
+    phone_numberE varchar(50),
+	card_numberE varchar(50),
+	PRIMARY KEY(anon_codeE)
 );
 
 CREATE TABLE csr(
