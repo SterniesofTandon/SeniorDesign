@@ -49,7 +49,9 @@ def register():
 # Define route for register
 @app.route('/csrPage')
 def csrPage():
-    return render_template('registerCSR.html')
+    //return render_template('registerCSR.html')
+
+    return render_template('csrPage.html')
 
 
 # Authenticates the login
