@@ -109,7 +109,7 @@ def registerAuth():
 
 # Authenticates the register for the customer service representatives
 @app.route('/registerAuthCSR', methods=['GET', 'POST'])
-def registerAuth():
+def registerAuthCSR():
     # grabs information from the forms
     username = request.form['username']
     password = request.form['password'] + SALT 
@@ -230,6 +230,23 @@ def image(image_name):
 	image_location = os.path.join(IMAGES_DIR, image_name)
 	if os.path.isfile(image_location):
 		return send_file(image_location, mimetype="image/jpg")
+
+@app.route("/comment/<pID>", methods=["GET", "POST"])
+@login_required
+def comment(pID):
+	cursor = conn.cursor()
+
+	if(request.form): 	
+		user = session["username"]
+		comment = request.form["comment"]
+	
+		query = "INSERT INTO ReactTo (username, pID, reactionTime, comment) VALUES (%s, %s, %s, %s)"
+		cursor.execute(query, (user, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
+		return redirect(url_for('viewPhotos', pID = pID))
+		
+	
+	cursor.close()
+	return redirect(url_for('home'))
 
 @app.route('/logout')
 def logout():

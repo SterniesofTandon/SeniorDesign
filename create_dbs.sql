@@ -28,7 +28,7 @@ CREATE TABLE ReactTo (
         pID INT,
         reactionTime DATETIME,
         comment VARCHAR(1000),    
-	      PRIMARY KEY (username, pID),
+	      PRIMARY KEY (comment),
         FOREIGN KEY (pID) REFERENCES Photo (pID),
         FOREIGN KEY (username) REFERENCES user (username)
 );
