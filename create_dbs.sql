@@ -37,11 +37,11 @@ CREATE TABLE ReactTo (
         reactionTime DATETIME,
         comment VARCHAR(1000),    
 	      PRIMARY KEY (reactionTime),
-        FOREIGN KEY (pID) REFERENCES Order (pID),
+        FOREIGN KEY (pID) REFERENCES Orders (pID),
         FOREIGN KEY (username) REFERENCES user (username)
 );
 
-CREATE TABLE Order (
+CREATE TABLE Orders (
         pID INT AUTO_INCREMENT,
         postingDate DATETIME,
         filePath VARCHAR(255),
