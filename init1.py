@@ -100,6 +100,7 @@ def registerAuth():
     password = request.form['password'] + SALT 
     hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
     #information to be encrypted:
+    anon_code = "2839473sl"
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     address = request.form['address']
@@ -121,7 +122,7 @@ def registerAuth():
         error = "This user already exists"
         return render_template('register.html', error = error)
     else:
-        ins = '''INSERT INTO user VALUES(%s, %s,2839473sl, %s, %s, %s, %s, %s))'''
+        ins = '''INSERT INTO user VALUES(%s, %s,anon_code, %s, %s, %s, %s, %s))'''
         cursor.execute(ins, (username, password, anon_code, first_name, last_name, address, phone_number, card_number))
         conn.commit()
         cursor.close()
