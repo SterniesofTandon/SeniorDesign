@@ -11,7 +11,7 @@ IMAGES_DIR = os.path.join(os.getcwd(), "images")
 
 # Initialize the app from Flask
 app = Flask(__name__)
-SALT = "sd210699"
+SALT = "sd102699"
 
 # Configure MySQL
 conn = pymysql.connect(host='localhost',
@@ -73,7 +73,7 @@ def loginAuth():
         error = 'Invalid login or username'
         return render_template('login.html', error=error)
 
-# Authenticates the register
+# Authenticates the register for the customer
 @app.route('/registerAuth', methods=['GET', 'POST'])
 def registerAuth():
     # grabs information from the forms
@@ -103,6 +103,37 @@ def registerAuth():
     else:
         ins = 'INSERT INTO user VALUES(%s, %s, %s, %s, %s, %s, %s))'
         cursor.execute(ins, (username, password, first_name, last_name, address, phone_number, card_number))
+        conn.commit()
+        cursor.close()
+        return render_template('index.html')
+
+# Authenticates the register for the customer service representatives
+@app.route('/registerAuthCSR', methods=['GET', 'POST'])
+def registerAuth():
+    # grabs information from the forms
+    username = request.form['username']
+    password = request.form['password'] + SALT 
+    hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    #information to be encrypted:
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+
+    # cursor used to send queries
+    cursor = conn.cursor()
+    # executes query
+    query = 'SELECT * FROM csr WHERE username = %s'
+    cursor.execute(query, (username))
+    # stores the results in a variable
+    data = cursor.fetchone()
+    # use fetchall() if you are expecting more than 1 data row
+    error = None
+    if(data):
+        # If the previous query returns data, then user exists
+        error = "This customer service representative already exists"
+        return render_template('registerCSR.html', error = error)
+    else:
+        ins = 'INSERT INTO csr VALUES(%s, %s, %s, %s))'
+        cursor.execute(ins, (username, password, first_name, last_name))
         conn.commit()
         cursor.close()
         return render_template('index.html')
