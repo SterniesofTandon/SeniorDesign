@@ -17,7 +17,31 @@ CREATE TABLE blog(
 	FOREIGN KEY (username) REFERENCES user(username)
 );
 
+CREATE TABLE belongTo(
+  username varchar(32),
+  groupName varchar(32),
+  groupCreator varchar(32)
+)
 
+CREATE TABLE ReactTo (
+        username VARCHAR(32),
+        pID INT,
+        reactionTime DATETIME,
+        comment VARCHAR(1000),    
+	      PRIMARY KEY (username, pID),
+        FOREIGN KEY (pID) REFERENCES Photo (pID),
+        FOREIGN KEY (username) REFERENCES user (username)
+);
+
+CREATE TABLE Photo (
+        pID INT AUTO_INCREMENT,
+        postingDate DATETIME,
+        filePath VARCHAR(255),
+        caption VARCHAR(1000),
+        poster VARCHAR(32),
+        PRIMARY KEY (pID),
+        FOREIGN KEY (poster) REFERENCES user (username)
+);
 
 '''
 -- phpMyAdmin SQL Dump

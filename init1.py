@@ -1,7 +1,12 @@
 # Import Flask Library
-from flask import Flask, render_template, request, session, url_for, redirect
+# from flask import Flask, render_template, request, session, url_for, redirect
+from flask import *
 import pymysql.cursors
 import hashlib
+import os
+import time
+from functools import wraps
+IMAGES_DIR = os.path.join(os.getcwd(), "images")
 
 
 # Initialize the app from Flask
@@ -21,6 +26,15 @@ conn = pymysql.connect(host='localhost',
 @app.route('/')
 def hello():
     return render_template('index.html')
+
+# Make sure user is logged in
+def login_required(func):
+	@wraps(func)
+	def dec(*args, **kwargs):
+		if not 'username' in session:
+			return redirect(url_for("login"))
+		return func(*args, **kwargs)
+	return dec
 
 # Define route for login
 @app.route('/login')
@@ -103,6 +117,88 @@ def home():
     data = cursor.fetchall()
     cursor.close()
     return render_template('home.html', username=user, posts=data)
+
+# Upload an order
+@app.route("/upload")
+@login_required
+def upload():
+	query = "SELECT groupName, groupCreator FROM BelongTo WHERE username = %s"
+	with conn.cursor() as cursor:
+		cursor.execute(query, (session["username"]))
+	data = cursor.fetchall()
+	return render_template("upload.html", groups = data)
+
+@app.route("/uploadPhoto", methods=["GET", "POST"])
+@login_required
+def uploadPhoto():
+	if request.files:
+		image_file = request.files.get("imageToUpload", "")
+		image_name = image_file.filename
+		filePath = os.path.join(IMAGES_DIR, image_name)
+		image_file.save(filePath) 
+
+		userName = session["username"]
+		caption = request.form.get('caption')
+		display = request.form.get('display')
+
+		#Post to all followers
+		if True:
+			query = "INSERT INTO Photo (postingDate, filePath, caption, poster) " \
+					"VALUES (%s, %s, %s, %s)"
+			with conn.cursor() as cursor:
+				cursor.execute(query, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, userName))
+				conn.commit()
+				cursor.close()
+
+		message = "photo successfully uploaded."
+		return render_template("upload.html", message=message)
+
+	else:
+		message = "Failed to upload photo"
+		return render_template("upload.html", message=message)
+
+# View photos (SEVERAL PARTS)
+@app.route("/photos", methods = ["GET"])
+@login_required
+def photos(): 
+	user = session["username"]
+	cursor = conn.cursor()
+	query = "SELECT pID, poster FROM Photo ORDER BY postingDate DESC"
+	cursor.execute(query)
+	photos = cursor.fetchall()
+	cursor.close()
+	return render_template("photos.html", photos = photos)
+
+@app.route("/viewPhotos/<int:pID>", methods=["GET", "POST"])
+@login_required
+def viewPhotos(pID):
+	user = session["username"]
+	
+	#query for pID, filePath, postingDate
+	cursor = conn.cursor()
+	query = "SELECT pID, postingDate, filePath FROM Photo WHERE pID = %s"
+	cursor.execute(query, (pID))
+	data = cursor.fetchall()
+
+	#first and last name of the poster 
+	query2 = "SELECT first_name, last_name FROM user WHERE username = %s"
+	cursor = conn.cursor()
+	cursor.execute(query2, (user))
+	name = cursor.fetchall()
+
+    #username of people who ReactedTo the photo
+	query4 = "SELECT username, comment FROM ReactTo WHERE pID = %s "
+	cursor = conn.cursor()
+	cursor.execute(query4, (pID))
+	comment = cursor.fetchall()
+
+	return render_template("viewPhotos.html", photos = data, names = name, comments = comment)
+
+@app.route("/photo/<image_name>", methods=["GET"])
+def image(image_name):
+	image_location = os.path.join(IMAGES_DIR, image_name)
+	if os.path.isfile(image_location):
+		return send_file(image_location, mimetype="image/jpg")
 
 @app.route('/logout')
 def logout():
