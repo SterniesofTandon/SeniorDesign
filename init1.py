@@ -36,15 +36,21 @@ def login_required(func):
 		return func(*args, **kwargs)
 	return dec
 
-# Define route for login
+# Define route for login, this can be used by both CSR and customer
 @app.route('/login')
 def login():
     return render_template('login.html')
 
-# Define route for register
+# Define route for register for customer
 @app.route('/register')
 def register():
     return render_template('register.html')
+
+# Define route for register
+@app.route('/csrPage')
+def register():
+    return render_template('registerCSR.html')
+
 
 # Authenticates the login
 @app.route('/loginAuth', methods=['GET', 'POST'])
