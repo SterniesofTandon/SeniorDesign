@@ -57,9 +57,8 @@ def csrPage():
 
 # Define route for register
 @app.route('/customerPage')
-def csrPage():
+def customerPage():
     return render_template('customerPage.html')
-
 
 # Authenticates the login
 @app.route('/loginAuth', methods=['GET', 'POST'])
