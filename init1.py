@@ -100,6 +100,7 @@ def registerAuth():
     address = request.form['address']
     phone_number = request.form['phone_number']
     card_number = request.form['card_number']
+    #we have to generate anon code
 
     # cursor used to send queries
     cursor = conn.cursor()
@@ -115,11 +116,11 @@ def registerAuth():
         error = "This user already exists"
         return render_template('register.html', error = error)
     else:
-        ins = 'INSERT INTO user VALUES(%s, %s, %s, %s, %s, %s, %s))'
+        ins = '''INSERT INTO user VALUES(%s, %s, %s, %s, %s, %s, %s))'''
         cursor.execute(ins, (username, password, first_name, last_name, address, phone_number, card_number))
         conn.commit()
         cursor.close()
-        return render_template('index.html')
+        return render_template('login.html')
 
 # Authenticates the register for the customer service representatives
 @app.route('/registerAuthCSR', methods=['GET', 'POST'])
