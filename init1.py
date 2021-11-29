@@ -48,7 +48,7 @@ def register():
 
 # Define route for register
 @app.route('/csrPage')
-def register():
+def csrPage():
     return render_template('registerCSR.html')
 
 
