@@ -215,7 +215,7 @@ def uploadOrder():
 
         #Post to all followers
         if True:
-            query = "INSERT INTO Order (postingDate, filePath, caption, poster) " \
+            query = "INSERT INTO Orders (postingDate, filePath, caption, poster) " \
                     "VALUES (%s, %s, %s, %s)"
             with conn.cursor() as cursor:
                 cursor.execute(query, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, userName))
@@ -235,7 +235,7 @@ def uploadOrder():
 def orders(): 
     user = session["username"]
     cursor = conn.cursor()
-    query = "SELECT pID, poster, filePath FROM Order ORDER BY postingDate DESC"
+    query = "SELECT pID, poster, filePath FROM Orders ORDER BY postingDate DESC"
     cursor.execute(query)
     photos = cursor.fetchall()
     cursor.close()
@@ -249,7 +249,7 @@ def viewOrders(pID):
     
     #query for pID, filePath, postingDate
     cursor = conn.cursor()
-    query = "SELECT pID, postingDate, filePath FROM Order WHERE pID = %s"
+    query = "SELECT pID, postingDate, filePath FROM Orders WHERE pID = %s"
     cursor.execute(query, (pID))
     data = cursor.fetchall()
 
