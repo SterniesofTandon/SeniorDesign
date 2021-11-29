@@ -7,7 +7,17 @@ CREATE TABLE user(
     addr varchar(50),
     phone_number varchar(50),
 	card_number varchar(50),
-	PRIMARY KEY(username)
+	PRIMARY KEY(anon_code)
+);
+
+CREATE TABLE userEncrypted(
+    anon_code varchar(50),
+    first_name varchar(50),
+	last_name varchar(50),
+    addr varchar(50),
+    phone_number varchar(50),
+	card_number varchar(50),
+	PRIMARY KEY(anon_code)
 );
 
 CREATE TABLE csr(
