@@ -47,6 +47,10 @@ def login_required(func):
 def login():
     return render_template('login.html')
 
+@app.route('/loginCSR')
+def loginCSR():
+    return render_template('loginCSR.html') 
+
 # Define route for register for customer
 @app.route('/register')
 def register():
@@ -92,6 +96,33 @@ def loginAuth():
         # returns an error message to the html page
         error = 'Invalid login or username'
         return render_template('login.html', error=error)
+
+# Authenticates the login
+@app.route('/loginAuthCSR', methods=['GET', 'POST'])
+def loginAuthCSR():
+    # grabs information from the forms
+    username = request.form['username']
+    pwd = request.form['pwd']
+
+    # cursor used to send queries
+    cursor = conn.cursor()
+    # executes query -> TODO: ADD func called userExists
+    query = 'SELECT * FROM csr WHERE username = %s and pwd = %s'
+    cursor.execute(query, (username, pwd))
+    # stores the results in a variable
+    data = cursor.fetchone()
+    # use fetchall() if you are expecting more than 1 data row
+    cursor.close()
+    error = None
+    if(data): #user exists
+        # creates a session for the the user
+        # session is a built in
+        session['username'] = username
+        return redirect(url_for('home'))
+    else:
+        # returns an error message to the html page
+        error = 'Invalid login or username'
+        return render_template('loginCSR.html', error=error)
 
 
 """ 
@@ -139,8 +170,8 @@ def registerAuth():
 def registerAuthCSR():
     # grabs information from the forms
     username = request.form['username']
-    password = request.form['password'] + SALT 
-    hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    pwd = request.form['pwd'] # + SALT 
+    hashed_password = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
     #information to be encrypted:
     first_name = request.form['first_name']
     last_name = request.form['last_name']
@@ -159,11 +190,11 @@ def registerAuthCSR():
         error = "This customer service representative already exists"
         return render_template('registerCSR.html', error = error)
     else:
-        ins = '''INSERT INTO csr VALUES(%s, %s, %s, %s))'''
-        cursor.execute(ins, (username, password, first_name, last_name))
+        ins = '''INSERT INTO csr VALUES(%s, %s, %s, %s)'''
+        cursor.execute(ins, (username, pwd, first_name, last_name))
         conn.commit()
         cursor.close()
-        return render_template('login.html')
+        return render_template('loginCSR.html')
 
 # Displays home page
 @app.route('/home')
