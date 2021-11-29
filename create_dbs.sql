@@ -12,7 +12,7 @@ CREATE TABLE user(
 
 CREATE TABLE csr(
 	username varchar(50),
-	password varchar(50),
+	pwd varchar(50),
     first_name varchar(50),
 	last_name varchar(50),
 	PRIMARY KEY(username)

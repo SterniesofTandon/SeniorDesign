@@ -71,13 +71,13 @@ def customerPage():
 def loginAuth():
     # grabs information from the forms
     username = request.form['username']
-    password = request.form['password']
+    pwd = request.form['pwd']
 
     # cursor used to send queries
     cursor = conn.cursor()
     # executes query -> TODO: ADD func called userExists
-    query = 'SELECT * FROM user WHERE username = %s and password = %s'
-    cursor.execute(query, (username, password))
+    query = 'SELECT * FROM user WHERE username = %s and pwd = %s'
+    cursor.execute(query, (username, pwd))
     # stores the results in a variable
     data = cursor.fetchone()
     # use fetchall() if you are expecting more than 1 data row
@@ -99,15 +99,11 @@ Registers the customer
 """
 @app.route('/registerAuth', methods=['POST'])
 def registerAuth():
-    print("we're in register auth")
     # grabs information from the forms
     username = request.form['username']
-    print(f"{username=}")
-    print("Here we are")
     pwd = request.form['pwd'] # + SALT 
     print(f"{pwd=}")
     hashed_password = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
-    print(f"{hashed_password=}")
     #information to be encrypted:
     anon_code = "2839473sl"
     first_name = request.form['first_name']
@@ -119,14 +115,11 @@ def registerAuth():
 
     # cursor used to send queries
     cursor = conn.cursor()
-    print("We got a cursor")
     # executes query
     query = 'SELECT * FROM user WHERE username = %s'
     cursor.execute(query, (username))
-    print("Did cursor execute?")
     # stores the results in a variable
     data = cursor.fetchone()
-    print(f"{data=}")
     # use fetchall() if you are expecting more than 1 data row
     error = None
     if(data):
@@ -135,7 +128,6 @@ def registerAuth():
         error = "This user already exists"
         return render_template('register.html', error = error)
     else:
-        print("Trying to insert user")
         ins = '''INSERT INTO user VALUES(%s, %s, %s, %s, %s, %s, %s, %s)'''
         cursor.execute(ins, (username, pwd, anon_code, first_name, last_name, addr, phone_number, card_number))
         conn.commit()
