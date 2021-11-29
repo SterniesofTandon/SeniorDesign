@@ -27,12 +27,35 @@ CREATE TABLE ReactTo (
         username VARCHAR(32),
         pID INT,
         reactionTime DATETIME,
+        chat VARCHAR(1000),    
+	      PRIMARY KEY (chat),
+        FOREIGN KEY (pID) REFERENCES Photo (pID),
+        FOREIGN KEY (username) REFERENCES user (username)
+);
+'''
+
+CREATE TABLE ReactTo (
+        username VARCHAR(32),
+        pID INT,
+        reactionTime DATETIME,
         comment VARCHAR(1000),    
 	      PRIMARY KEY (comment),
         FOREIGN KEY (pID) REFERENCES Photo (pID),
         FOREIGN KEY (username) REFERENCES user (username)
 );
+'''
 
+CREATE TABLE Order (
+        caseNum INT AUTO_INCREMENT,
+        postingDate DATETIME,
+        filePath VARCHAR(255),
+        de VARCHAR(1000),
+        poster VARCHAR(32),
+        PRIMARY KEY (pID),
+        FOREIGN KEY (poster) REFERENCES user (username)
+);
+
+'''
 CREATE TABLE Photo (
         pID INT AUTO_INCREMENT,
         postingDate DATETIME,
@@ -42,7 +65,7 @@ CREATE TABLE Photo (
         PRIMARY KEY (pID),
         FOREIGN KEY (poster) REFERENCES user (username)
 );
-
+'''
 '''
 -- phpMyAdmin SQL Dump
 -- version 4.9.7

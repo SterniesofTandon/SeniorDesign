@@ -159,9 +159,9 @@ def upload():
 	data = cursor.fetchall()
 	return render_template("upload.html", groups = data)
 
-@app.route("/uploadPhoto", methods=["GET", "POST"])
+@app.route("/uploadOrder", methods=["GET", "POST"])
 @login_required
-def uploadPhoto():
+def uploadOrder():
 	if request.files:
 		image_file = request.files.get("imageToUpload", "")
 		image_name = image_file.filename
@@ -174,7 +174,7 @@ def uploadPhoto():
 
 		#Post to all followers
 		if True:
-			query = "INSERT INTO Photo (postingDate, filePath, caption, poster) " \
+			query = "INSERT INTO Order (postingDate, filePath, caption, poster) " \
 					"VALUES (%s, %s, %s, %s)"
 			with conn.cursor() as cursor:
 				cursor.execute(query, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, userName))
@@ -188,17 +188,17 @@ def uploadPhoto():
 		message = "Failed to upload photo"
 		return render_template("upload.html", message=message)
 
-# View photos (SEVERAL PARTS)
-@app.route("/photos", methods = ["GET"])
+# View orders (SEVERAL PARTS)
+@app.route("/orders", methods = ["GET"])
 @login_required
-def photos(): 
+def orders(): 
 	user = session["username"]
 	cursor = conn.cursor()
-	query = "SELECT pID, poster FROM Photo ORDER BY postingDate DESC"
+	query = "SELECT pID, poster FROM Order ORDER BY postingDate DESC"
 	cursor.execute(query)
-	photos = cursor.fetchall()
+	orders = cursor.fetchall()
 	cursor.close()
-	return render_template("photos.html", photos = photos)
+	return render_template("orders.html", photos = photos)
 
 @app.route("/viewPhotos/<int:pID>", methods=["GET", "POST"])
 @login_required
@@ -217,13 +217,13 @@ def viewPhotos(pID):
 	cursor.execute(query2, (user))
 	name = cursor.fetchall()
 
-    #username of people who ReactedTo the photo
+    #username of people who ReactedTo the photo --> CSRs who take on the order
 	query4 = "SELECT username, comment FROM ReactTo WHERE pID = %s "
 	cursor = conn.cursor()
 	cursor.execute(query4, (pID))
-	comment = cursor.fetchall()
+	chat = cursor.fetchall()
 
-	return render_template("viewPhotos.html", photos = data, names = name, comments = comment)
+	return render_template("viewPhotos.html", orders = data, names = name, chats = chat)
 
 @app.route("/photo/<image_name>", methods=["GET"])
 def image(image_name):

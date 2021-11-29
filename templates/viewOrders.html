@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+    
+
+    <h1>Your Orders</h1>
+    <table border="1">
+        <th>caseNum</th>
+        <th>file url </th>
+        <th> posting Date </th>
+        <th>firstName</th>
+        <th>lastName</th>
+       
+        <th>comments</th>
+
+    {% for order in orders %}
+        {% for p in names %}
+        <tr>
+            <td>{{order.pID}}</td>
+            <td><a href="/order/{{order.filePath}}"> {{order.pID}}</a></td> <!-- /photo/{{photo.filePath}} -->
+            <td>{{order.postingDate}}</td>
+            <td>{{p.firstName}}</td>                
+            <td>{{p.lastName}}</td>
+           
+
+            <td><form action="/chat/{{order.pID}}"  method="POST">
+            <input type="text" name= "chat" placeholder="Type a message..."> <input type="submit" value="chat">
+
+            <!-- <form action="/comment/{{photo.pID}}"  method="POST">
+            <input type="text" name= "emoji" placeholder="Add emoji">&nbsp&nbsp <input type="submit" value="emoji">
+            </form> -->
+
+            </form></td>
+
+        </tr>
+           
+        {% endfor %}
+    {% endfor %}
+    </table>
+
+    <h3>Chat with a Customer Service Representative: </h3>
+    <table border = "1">
+    <th>username</th>
+    <th>chat</th>
+    {% for chat in chats %}
+        <tr>
+            <td>{{chat.username}}</td>
+            <td>{{chat.chatt}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    {% if message %}
+        {{ message }}
+    {% endif %}
+
+    <br/>
+    <a href="/orders">Go back</a>
+    </body>
+</html>
+
+
