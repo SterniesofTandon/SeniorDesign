@@ -22,6 +22,11 @@ conn = pymysql.connect(host='localhost',
                        charset='utf8mb4',
                        cursorclass=pymysql.cursors.DictCursor)
 
+
+if __name__ == '__main__':
+    app.debug = True
+    app.run()                       
+
 # Define a route to hello function
 @app.route('/')
 def hello():
@@ -147,11 +152,11 @@ def registerAuthCSR():
         error = "This customer service representative already exists"
         return render_template('registerCSR.html', error = error)
     else:
-        ins = 'INSERT INTO csr VALUES(%s, %s, %s, %s))'
+        ins = '''INSERT INTO csr VALUES(%s, %s, %s, %s))'''
         cursor.execute(ins, (username, password, first_name, last_name))
         conn.commit()
         cursor.close()
-        return render_template('index.html')
+        return render_template('login.html')
 
 # Displays home page
 @app.route('/home')
