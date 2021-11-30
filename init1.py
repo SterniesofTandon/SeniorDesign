@@ -181,11 +181,11 @@ def uploadOrder():
 				conn.commit()
 				cursor.close()
 
-		message = "photo successfully uploaded."
+		message = "order successfully uploaded."
 		return render_template("upload.html", message=message)
 
 	else:
-		message = "Failed to upload photo"
+		message = "Failed to upload order"
 		return render_template("upload.html", message=message)
 
 # View orders (SEVERAL PARTS)
@@ -198,21 +198,21 @@ def orders():
 	cursor.execute(query)
 	orders = cursor.fetchall()
 	cursor.close()
-	return render_template("orders.html", photos = photos)
+	return render_template("orders.html", orders = orders)
 
-@app.route("/viewPhotos/<int:pID>", methods=["GET", "POST"])
+@app.route("/viewOrders/<int:pID>", methods=["GET", "POST"])
 @login_required
-def viewPhotos(pID):
+def viewOrders(pID):
 	user = session["username"]
 	
 	#query for pID, filePath, postingDate
 	cursor = conn.cursor()
-	query = "SELECT pID, postingDate, filePath FROM Photo WHERE pID = %s"
+	query = "SELECT caseNum, postingDate, filePath FROM Order WHERE caseNum = %s"
 	cursor.execute(query, (pID))
 	data = cursor.fetchall()
 
 	#first and last name of the poster 
-	query2 = "SELECT first_name, last_name FROM user WHERE username = %s"
+	query2 = "SELECT first_name, last_name FROM user WHERE anon_code = %s"
 	cursor = conn.cursor()
 	cursor.execute(query2, (user))
 	name = cursor.fetchall()
@@ -223,15 +223,15 @@ def viewPhotos(pID):
 	cursor.execute(query4, (pID))
 	chat = cursor.fetchall()
 
-	return render_template("viewPhotos.html", orders = data, names = name, chats = chat)
+	return render_template("viewOrders.html", orders = data, names = name, chats = chat)
 
-@app.route("/photo/<image_name>", methods=["GET"])
+@app.route("/order/<image_name>", methods=["GET"])
 def image(image_name):
 	image_location = os.path.join(IMAGES_DIR, image_name)
 	if os.path.isfile(image_location):
 		return send_file(image_location, mimetype="image/jpg")
 
-@app.route("/comment/<pID>", methods=["GET", "POST"])
+@app.route("/chat/<caseNum>", methods=["GET", "POST"])
 @login_required
 def comment(pID):
 	cursor = conn.cursor()
@@ -242,7 +242,7 @@ def comment(pID):
 	
 		query = "INSERT INTO ReactTo (username, pID, reactionTime, comment) VALUES (%s, %s, %s, %s)"
 		cursor.execute(query, (user, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
-		return redirect(url_for('viewPhotos', pID = pID))
+		return redirect(url_for('viewOrders', pID = pID))
 		
 	
 	cursor.close()
