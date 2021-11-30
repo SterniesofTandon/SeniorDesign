@@ -141,7 +141,6 @@ def registerAuth():
     card_number = request.form['card_number']
     #we have to generate anon code
     key_str = "08242007"
-    anon_codeE = anon_code
     first_nameE = first_name
     last_nameE = last_name
     addrE = addr
@@ -168,7 +167,7 @@ def registerAuth():
         #insert all the encrypted data
         insE = '''INSERT INTO userE VALUES(AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"), 
         AES_ENCRYPT(%s,"08242007"), AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"))'''
-        cursor.execute(insE, (anon_codeE, first_nameE, last_nameE, addrE, phone_numberE, card_numberE))
+        cursor.execute(insE, (anon_code, first_nameE, last_nameE, addrE, phone_numberE, card_numberE))
         conn.commit()
         cursor.close()
         return render_template('login.html')

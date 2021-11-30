@@ -11,13 +11,12 @@ CREATE TABLE user(
 );
 
 CREATE TABLE userE(
-    anon_codeE varchar(50),
     first_nameE varchar(50),
 	last_nameE varchar(50),
     addrE varchar(50),
     phone_numberE varchar(50),
 	card_numberE varchar(50),
-	PRIMARY KEY(anon_codeE)
+    FOREIGN KEY (anon_code) REFERENCES user(anon_code)
 );
 
 CREATE TABLE csr(
