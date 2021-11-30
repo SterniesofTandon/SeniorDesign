@@ -8,11 +8,15 @@ import os
 import time
 from functools import wraps
 IMAGES_DIR = os.path.join(os.getcwd(), "images")
+from flask_bootstrap import Bootstrap
 
 
 # Initialize the app from Flask
 app = Flask(__name__)
+Bootstrap(app)
+
 SALT = "sd102699"
+
 
 # Configure MySQL
 conn = pymysql.connect(host='localhost',
@@ -30,7 +34,7 @@ if __name__ == '__main__':
 # Define a route to hello function
 @app.route('/')
 def hello():
-    return render_template('index.html')
+    return render_template('public/index.html')
 
 # Make sure user is logged in
 def login_required(func):
