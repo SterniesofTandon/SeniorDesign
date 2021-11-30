@@ -25,8 +25,7 @@ conn = pymysql.connect(host='localhost',
 
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()                       
+    app.run(debug=True)                       
 
 # Define a route to hello function
 @app.route('/')
