@@ -20,7 +20,7 @@ from flask_bootstrap import Bootstrap
 #app = Flask(__name__, static_folder='public/static')
 app = Flask(__name__,
             static_url_path='', 
-            static_folder='templates/public/static',
+            static_folder='templates/static',
             template_folder='templates')
 
 Bootstrap(app)
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 # Define a route to hello function
 @app.route('/')
 def hello():
-    return render_template('public/index.html')
+    return render_template('index.html')
 
 # Make sure user is logged in
 def login_required(func):
