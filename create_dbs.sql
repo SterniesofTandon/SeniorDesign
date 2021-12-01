@@ -1,21 +1,21 @@
 CREATE TABLE user(
-	username varchar(50),
-	pwd varchar(50),
-    anon_code varchar(50),
-    first_name varchar(50),
-	last_name varchar(50),
-    addr varchar(50),
-    phone_number varchar(50),
-	card_number varchar(50),
+	username varchar(30),
+	pwd varchar(30),
+    anon_code varchar(256),
+    first_name varchar(30),
+	last_name varchar(30),
+    addr varchar(30),
+    phone_number varchar(15),
+	card_number varchar(30),
 	PRIMARY KEY(anon_code)
 );
 
 CREATE TABLE userE(
-    first_nameE varchar(50),
-	last_nameE varchar(50),
-    addrE varchar(50),
-    phone_numberE varchar(50),
-	card_numberE varchar(50),
+    first_nameE varchar(256),
+	last_nameE varchar(256),
+    addrE varchar(256),
+    phone_numberE varchar(256),
+	card_numberE varchar(256),
     FOREIGN KEY (anon_code) REFERENCES user(anon_code)
 );
 
