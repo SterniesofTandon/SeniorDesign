@@ -6,14 +6,22 @@ import pymysql.cursors
 import hashlib
 import os
 import time
+from flask import request, send_from_directory
 from functools import wraps
 IMAGES_DIR = os.path.join(os.getcwd(), "images")
 from flask_bootstrap import Bootstrap
 
+# set the project root directory as the static folder, you can set others.
+#app = Flask(__name__, static_url_path='/Users/homefolder/Documents/NYU/Fall2021/Senior Design')
+
 
 # Initialize the app from Flask
 #app = Flask(__name__)
-app = Flask(__name__, static_folder='public/static')
+#app = Flask(__name__, static_folder='public/static')
+app = Flask(__name__,
+            static_url_path='', 
+            static_folder='templates/public/static',
+            template_folder='templates')
 
 Bootstrap(app)
 
@@ -36,7 +44,7 @@ if __name__ == '__main__':
 # Define a route to hello function
 @app.route('/')
 def hello():
-    return render_template('index.html')
+    return render_template('public/index.html')
 
 # Make sure user is logged in
 def login_required(func):
