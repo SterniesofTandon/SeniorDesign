@@ -12,7 +12,9 @@ from flask_bootstrap import Bootstrap
 
 
 # Initialize the app from Flask
-app = Flask(__name__)
+#app = Flask(__name__)
+app = Flask(__name__, static_folder='public/static')
+
 Bootstrap(app)
 
 SALT = "sd102699"
@@ -34,7 +36,7 @@ if __name__ == '__main__':
 # Define a route to hello function
 @app.route('/')
 def hello():
-    return render_template('public/index.html')
+    return render_template('index.html')
 
 # Make sure user is logged in
 def login_required(func):

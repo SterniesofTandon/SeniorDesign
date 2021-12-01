@@ -1,5 +1,7 @@
 {% extends "bootstrap/base.html" %}
 {% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
@@ -15,11 +17,11 @@
     <!-- ===============================================-->
     <title>Sternies of Tandon | ANON </title>
 
-    {% block styles %}
-    {{super()}}
+  
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
+    <!-- 
     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png">
@@ -27,15 +29,14 @@
     <link rel="manifest" href="assets/img/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
-
+-->
 
     <!-- ===============================================-->
     <!--    Stylesheets-->
     <!-- ===============================================-->
 
   </head>
-  <link href="assets/css/theme.css" rel="stylesheet" />
-  {% endblock %}
+  <link href="/static/assets/css/theme.css" rel="stylesheet" />
 
   <body>
 
@@ -44,7 +45,7 @@
     <!-- ===============================================-->
     <main class="main" id="top">
       <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
-        <div class="container"><a class="navbar-brand" href="#"><img src="assets/img/icons/logo.png" alt="" width="30" /><span class="text-1000 fs-1 ms-2 fw-medium">Sternies of Tandon<span class="fw-bold"> ANON</span></span></a>
+        <div class="container"><a class="navbar-brand" href="#"><img src="static/assets/img/icons/logo.png" alt="" width="30" /><span class="text-1000 fs-1 ms-2 fw-medium">Sternies of Tandon<span class="fw-bold"> ANON</span></span></a>
               <button class="btn btn-outline-danger rounded-pill order-0" type="submit">Customer Login & Registration</button>
               <button class="btn btn-outline-danger rounded-pill order-0" type="submit">Customer Service Login & Registration</button>
 
@@ -63,7 +64,7 @@
 
         <div class="container">
           <div class="row align-items-center">
-            <div class="col-md-5 col-lg-7 text-lg-center"><img class="img-fluid mb-5 mb-md-0" src="assets/img/illustrations/2.png" alt="" /></div>
+            <div class="col-md-5 col-lg-7 text-lg-center"><img class="img-fluid mb-5 mb-md-0" src="static/assets/img/illustrations/2.png" alt="" /></div>
             <div class="col-md-7 col-lg-5 text-center text-md-start">
               <h2>We Provide Many <br />Features You Can Use</h2>
               <p> Here are some of the reasons companies choose us as their customer service chat platform: </p>
@@ -110,7 +111,7 @@
               <h2>Customer Service Representatives from Around the World!</h2>
               <p>Used by trusted companies everywhere.</p>
             </div>
-            <div class="pt-8"><img class="img-fluid" src="assets/" alt="" /></div>
+            <div class="pt-8"><img class="img-fluid" src="static/assets/img/gallery/map.png" alt="" /></div>
           </div>
         </div>
         <!-- end of .container-->
@@ -128,11 +129,11 @@
 
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-md-0"><img class="img-fluid" src="assets/img/gallery/netflix.png" alt="" height="50" /></div>
-            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-md-0"><img class="img-fluid" src="assets/img/gallery/reddit.png" alt="" height="50" /></div>
-            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-md-0"><img class="img-fluid" src="assets/img/gallery/amazon.png" alt="" height="50" /></div>
-            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-sm-0"><img class="img-fluid" src="assets/img/gallery/discord.png" alt="" height="50" /></div>
-            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-sm-0"><img class="img-fluid" src="assets/img/gallery/spotify.png" alt="" height="50" /></div>
+            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-md-0"><img class="img-fluid" src="static/assets/img/gallery/netflix.png" alt="" height="50" /></div>
+            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-md-0"><img class="img-fluid" src="static/assets/img/gallery/reddit.png" alt="" height="50" /></div>
+            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-md-0"><img class="img-fluid" src="static/assets/img/gallery/amazon.png" alt="" height="50" /></div>
+            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-sm-0"><img class="img-fluid" src="static/assets/img/gallery/discord.png" alt="" height="50" /></div>
+            <div class="col-6 col-sm-4 col-md-2 mb-2 mb-sm-0"><img class="img-fluid" src="static/assets/img/gallery/spotify.png" alt="" height="50" /></div>
           </div>
         </div>
         <!-- end of .container-->
@@ -163,7 +164,7 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex align-items-center"><img class="img-fluid" src="assets/img/gallery/user-1.png" alt="" />
+                          <div class="d-flex align-items-center"><img class="img-fluid" src="static/assets/img/gallery/user-1.png" alt="" />
                             <div class="flex-1 ms-3">
                               <h6 class="mb-0 fs--1 text-1000 fw-medium">Viezh Robert</h6>
                               <p class="fs--2 fw-normal mb-0">arsaw, Poland</p>
@@ -183,7 +184,7 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex align-items-center"><img class="img-fluid" src="assets/img/gallery/user-2.png" alt="" />
+                          <div class="d-flex align-items-center"><img class="img-fluid" src="static/assets/img/gallery/user-2.png" alt="" />
                             <div class="flex-1 ms-3">
                               <h6 class="mb-0 fs--1 text-1000 fw-medium">Kim Young Jou</h6>
                               <p class="fs--2 fw-normal mb-0">Seoul, South Korea</p>
@@ -203,7 +204,7 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex align-items-center"><img class="img-fluid" src="assets/img/gallery/user-3.png" alt="" />
+                          <div class="d-flex align-items-center"><img class="img-fluid" src="static/assets/img/gallery/user-3.png" alt="" />
                             <div class="flex-1 ms-3">
                               <h6 class="mb-0 fs--1 text-1000 fw-medium">Viezh Robert</h6>
                               <p class="fs--2 fw-normal mb-0">Shanxi, China</p>
@@ -227,7 +228,7 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex align-items-center"><img class="img-fluid" src="assets/img/gallery/user-1.png" alt="" />
+                          <div class="d-flex align-items-center"><img class="img-fluid" src="static/assets/img/gallery/user-1.png" alt="" />
                             <div class="flex-1 ms-3">
                               <h6 class="mb-0 fs--1 text-1000 fw-medium">Viezh Robert</h6>
                               <p class="fs--2 fw-normal mb-0">arsaw, Poland</p>
@@ -247,7 +248,7 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex align-items-center"><img class="img-fluid" src="assets/img/gallery/user-2.png" alt="" />
+                          <div class="d-flex align-items-center"><img class="img-fluid" src="static/assets/img/gallery/user-2.png" alt="" />
                             <div class="flex-1 ms-3">
                               <h6 class="mb-0 fs--1 text-1000 fw-medium">Kim Young Jou</h6>
                               <p class="fs--2 fw-normal mb-0">Seoul, South Korea</p>
@@ -267,7 +268,7 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex align-items-center"><img class="img-fluid" src="assets/img/gallery/user-3.png" alt="" />
+                          <div class="d-flex align-items-center"><img class="img-fluid" src="static/assets/img/gallery/user-3.png" alt="" />
                             <div class="flex-1 ms-3">
                               <h6 class="mb-0 fs--1 text-1000 fw-medium">Viezh Robert</h6>
                               <p class="fs--2 fw-normal mb-0">Shanxi, China</p>
@@ -291,7 +292,7 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex align-items-center"><img class="img-fluid" src="assets/img/gallery/user-1.png" alt="" />
+                          <div class="d-flex align-items-center"><img class="img-fluid" src="static/assets/img/gallery/user-1.png" alt="" />
                             <div class="flex-1 ms-3">
                               <h6 class="mb-0 fs--1 text-1000 fw-medium">Viezh Robert</h6>
                               <p class="fs--2 fw-normal mb-0">arsaw, Poland</p>
@@ -311,7 +312,7 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex align-items-center"><img class="img-fluid" src="assets/img/gallery/user-2.png" alt="" />
+                          <div class="d-flex align-items-center"><img class="img-fluid" src="static/assets/img/gallery/user-2.png" alt="" />
                             <div class="flex-1 ms-3">
                               <h6 class="mb-0 fs--1 text-1000 fw-medium">Kim Young Jou</h6>
                               <p class="fs--2 fw-normal mb-0">Seoul, South Korea</p>
@@ -331,7 +332,7 @@
                     <div class="card h-100">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex align-items-center"><img class="img-fluid" src="assets/img/gallery/user-3.png" alt="" />
+                          <div class="d-flex align-items-center"><img class="img-fluid" src="static/assets/img/gallery/user-3.png" alt="" />
                             <div class="flex-1 ms-3">
                               <h6 class="mb-0 fs--1 text-1000 fw-medium">Viezh Robert</h6>
                               <p class="fs--2 fw-normal mb-0">Shanxi, China</p>
@@ -384,13 +385,18 @@
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
-    <script src="vendors/@popperjs/popper.min.js"></script>
-    <script src="vendors/bootstrap/bootstrap.min.js"></script>
-    <script src="vendors/is/is.min.js"></script>
+    <script src="static/vendors/@popperjs/popper.min.js"></script>
+    <script src="static/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="static/vendors/is/is.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-    <script src="assets/js/theme.js"></script>
+    <script src="static/assets/js/theme.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
   </body>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   {% endblock %}
