@@ -11,7 +11,7 @@ CREATE TABLE user(
 );
 
 CREATE TABLE userE(
-    first_nameE varchar(256),
+    first_nameE varchar(256) CHARACTER SET utf8mb4 NOT NULL,
 	last_nameE varchar(256),
     addrE varchar(256),
     phone_numberE varchar(256),

@@ -6,6 +6,8 @@ import pymysql.cursors
 import hashlib
 import os
 import time
+import random
+import string
 from flask import request, send_from_directory
 from functools import wraps
 IMAGES_DIR = os.path.join(os.getcwd(), "images")
@@ -142,8 +144,9 @@ def registerAuth():
     pwd = request.form['pwd'] # + SALT 
     print(f"{pwd=}")
     hashed_password = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
-    #information to be encrypted:
-    anon_code = "2839473sl"
+    randomString = string.ascii_uppercase + string.digits
+    anon_code = ''.join(random.choice(randomString) for i in range(8))
+    #Information that gets encrypted below
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     addr = request.form['addr']
@@ -175,7 +178,7 @@ def registerAuth():
         ins = '''INSERT INTO user VALUES(%s, %s, %s, %s, %s, %s, %s, %s)'''
         cursor.execute(ins, (username, pwd, anon_code, first_name, last_name, addr, phone_number, card_number))
         #insert all the encrypted data
-        insE = '''INSERT INTO userE VALUES(AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"), 
+        insE = '''INSERT INTO userE VALUES(%s, AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"), 
         AES_ENCRYPT(%s,"08242007"), AES_ENCRYPT(%s, "08242007"), AES_ENCRYPT(%s, "08242007"))'''
         cursor.execute(insE, (anon_code, first_nameE, last_nameE, addrE, phone_numberE, card_numberE))
         conn.commit()
