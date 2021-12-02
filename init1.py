@@ -344,6 +344,25 @@ app.secret_key = 'somekeythatyouwillneverguess'
 if __name__ == "__main__":
     app.run('127.0.0.1', 5000, debug = True)
 
+@app.route('/follow', methods = ["GET", "POST"])
+@login_required
+def follow(): 
+
+	cursor = conn.cursor()
+
+	if(request.form): 
+		user = session["username"]
+		followee = request.form["followee"]	
+		
+		query = "INSERT INTO Follow(follower, followee, followStatus) VALUES (%s, %s, %s)"
+		cursor = conn.cursor()
+		cursor.execute(query, (user, followee, 1))
+		cursor.close()
+		return render_template("homeCSR.html")
+
+	return render_template("follow.html")
+
+
 '''
 @app.route('/post', methods=['GET', 'POST'])
 def post():

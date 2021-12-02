@@ -64,7 +64,5 @@ CREATE TABLE Follow(
         follower VARCHAR(32),
         followee VARCHAR(32),
         followStatus INT,
-        PRIMARY KEY (follower, followee),
-        FOREIGN KEY (follower) REFERENCES user (username),
-        FOREIGN KEY (followee) REFERENCES user (username)
+        PRIMARY KEY (follower, followee)
 );
