@@ -46,7 +46,10 @@ def login():
 def register():
     return render_template('register.html')
 
-# Authenticates the login
+
+# ============= EDITS UNDER JAZ =============
+
+# Authenticates the CSR login
 @app.route('/loginAuth', methods=['GET', 'POST'])
 def loginAuth():
     # grabs information from the forms
@@ -56,7 +59,7 @@ def loginAuth():
     # cursor used to send queries
     cursor = conn.cursor()
     # executes query -> TODO: ADD func called userExists
-    query = 'SELECT * FROM user WHERE username = %s and password = %s'
+    query = 'SELECT * FROM CSR WHERE username = %s and password = %s'
     cursor.execute(query, (username, password))
     # stores the results in a variable
     data = cursor.fetchone()
@@ -67,11 +70,41 @@ def loginAuth():
         # creates a session for the the user
         # session is a built in
         session['username'] = username
-        return redirect(url_for('home'))
+        return redirect(url_for('csrHome'))
     else:
         # returns an error message to the html page
         error = 'Invalid login or username'
-        return render_template('login.html', error=error)
+        return render_template('csrLogin.html', error=error)
+
+# Authenticates the customer login
+@app.route('/loginAuth', methods=['GET', 'POST'])
+def loginAuth():
+    # grabs information from the forms
+    username = request.form['username']
+    password = request.form['password']
+
+    # cursor used to send queries
+    cursor = conn.cursor()
+    # executes query -> TODO: ADD func called userExists
+    query = 'SELECT * FROM User WHERE username = %s and password = %s'
+    cursor.execute(query, (username, password))
+    # stores the results in a variable
+    data = cursor.fetchone()
+    # use fetchall() if you are expecting more than 1 data row
+    cursor.close()
+    error = None
+    if(data): #user exists
+        # creates a session for the the user
+        # session is a built in
+        session['username'] = username
+        return redirect(url_for('custHome'))
+    else:
+        # returns an error message to the html page
+        error = 'Invalid login or username'
+        return render_template('custLogin.html', error=error)
+
+# ============= EDITS END =============
+
 
 # Authenticates the register for the customer
 @app.route('/registerAuth', methods=['GET', 'POST'])
@@ -138,7 +171,21 @@ def registerAuthCSR():
         cursor.close()
         return render_template('index.html')
 
-# Displays home page
+
+# ============= Homepage for CSR vs Customer =============
+
+# Displays CSR home page
+@app.route('/csrHome')
+def home():
+    user = session['username']
+    cursor = conn.cursor();
+    query = 'SELECT ts, blog_post FROM blog WHERE username = %s ORDER BY ts DESC'
+    cursor.execute(query, (user))
+    data = cursor.fetchall()
+    cursor.close()
+    return render_template('csrHome.html', username=user, posts=data)
+
+# Displays customer home page
 @app.route('/home')
 def home():
     user = session['username']
@@ -148,6 +195,7 @@ def home():
     data = cursor.fetchall()
     cursor.close()
     return render_template('home.html', username=user, posts=data)
+# ========================================================
 
 # Upload an order
 @app.route("/upload")
@@ -188,6 +236,9 @@ def uploadOrder():
 		message = "Failed to upload order"
 		return render_template("upload.html", message=message)
 
+
+# ============= View Orders for Customer =============
+
 # View orders (SEVERAL PARTS)
 @app.route("/orders", methods = ["GET"])
 @login_required
@@ -224,6 +275,47 @@ def viewOrders(pID):
 	chat = cursor.fetchall()
 
 	return render_template("viewOrders.html", orders = data, names = name, chats = chat)
+
+
+# ============= View Cases for CSR =============
+
+# View cases (SEVERAL PARTS)
+@app.route("/cases", methods = ["GET"])
+@login_required
+def cases(): 
+	user = session["username"]
+	cursor = conn.cursor()
+	query = "SELECT caseNum, postingDate, filePath FROM Order ORDER BY postingDate DESC"
+	cursor.execute(query)
+	cases = cursor.fetchall()
+	cursor.close()
+	return render_template("cases.html", cases = orders)
+
+@app.route("/viewOrders/<int:pID>", methods=["GET", "POST"])
+@login_required
+def viewCases(pID):
+	user = session["username"]
+	
+	#query for pID, filePath, postingDate
+	cursor = conn.cursor()
+	query = "SELECT caseNum, postingDate, filePath FROM Order WHERE caseNum = %s"
+	cursor.execute(query, (pID))
+	data = cursor.fetchall()
+
+	#first and last name of the poster 
+	query2 = "SELECT first_name, last_name FROM user WHERE anon_code = %s"
+	cursor = conn.cursor()
+	cursor.execute(query2, (user))
+	name = cursor.fetchall()
+
+    #username of people who ReactedTo the photo --> CSRs who take on the order
+	query4 = "SELECT username, comment FROM ReactTo WHERE pID = %s "
+	cursor = conn.cursor()
+	cursor.execute(query4, (pID))
+	chat = cursor.fetchall()
+
+	return render_template("viewOrders.html", orders = data, names = name, chats = chat)
+
 
 @app.route("/order/<image_name>", methods=["GET"])
 def image(image_name):

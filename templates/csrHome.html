@@ -1,0 +1,55 @@
+<html>
+<head>
+</head>
+<body>
+<form action="/post" method="POST">
+	<h1>Welcome {{username}}</h1> 
+
+	<h2>Your Cases:</h2>
+    <table border="1">
+        <th>caseNum</th>
+        <th>file url</th>
+        <th>open date</th>       
+        <th>comments</th>
+
+    {% for order in orders %}
+        {% for p in names %}
+        <tr>
+            <td>{{case.caseNum}}</td>
+            <td><a href="/case/{{case.filePath}}"> {{order.pID}}</a></td> <!-- /photo/{{photo.filePath}} -->
+            <td>{{order.postingDate}}</td>
+            <td>{{p.firstName}}</td>                
+            <td>{{p.lastName}}</td>
+           
+
+            <td><form action="/chat/{{order.pID}}"  method="POST">
+            <input type="text" name= "chat" placeholder="Type a message..."> <input type="submit" value="chat">
+
+            <!-- <form action="/comment/{{photo.pID}}"  method="POST">
+            <input type="text" name= "emoji" placeholder="Add emoji">&nbsp&nbsp <input type="submit" value="emoji">
+            </form> -->
+
+            </form></td>
+
+        </tr>
+           
+        {% endfor %}
+    {% endfor %}
+    </table>
+
+	<h2> Add Order: </h2>
+	<input type="text" name = "blog" placeholder="Order Number" required/> </br>
+	<input type="submit" value = "Submit" />
+</form>
+
+<br>
+<a href="/orders">Orders </a>
+<br>
+<a href="/upload">Upload Order </a>
+<br>
+<a href="/logout">Logout</a>
+
+</body>
+
+
+</html>

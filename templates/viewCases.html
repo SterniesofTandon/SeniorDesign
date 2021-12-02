@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+    
+
+    <h1>Your Cases</h1>
+    <table border="1">
+        <th>caseNum</th>
+        <th>posting Date</th>
+        <th>firstName</th>
+        <th>lastName</th>
+       
+        <th>comments</th>
+
+    {% for case in cases %}
+        <tr>
+            <td>{{case.caseNum}}</td>
+            <td><a href="/case/{{case.filePath}}"> {{case.caseNum}}</a></td>
+            <td>{{case.postingDate}}</td>
+           
+
+            <td><form action="/chat/{{case.caseNum}}"  method="POST">
+            <input type="text" name= "chat" placeholder="Type a message..."> <input type="submit" value="chat">
+
+            <!-- <form action="/comment/{{photo.pID}}"  method="POST">
+            <input type="text" name= "emoji" placeholder="Add emoji">&nbsp&nbsp <input type="submit" value="emoji">
+            </form> -->
+
+            </form></td>
+
+        </tr>
+    {% endfor %}
+    </table>
+
+    {% if message %}
+        {{ message }}
+    {% endif %}
+
+    <br/>
+    <a href="/orders">Go back</a>
+    </body>
+</html>
+
+
