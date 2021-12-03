@@ -50,7 +50,7 @@ def register():
 # ============= EDITS UNDER JAZ =============
 
 # Authenticates the CSR login
-@app.route('/loginAuth', methods=['GET', 'POST'])
+@app.route('/loginAuthCSR', methods=['GET', 'POST'])
 def loginAuth():
     # grabs information from the forms
     username = request.form['username']
@@ -77,7 +77,7 @@ def loginAuth():
         return render_template('csrLogin.html', error=error)
 
 # Authenticates the customer login
-@app.route('/loginAuth', methods=['GET', 'POST'])
+@app.route('/loginAuthCust', methods=['GET', 'POST'])
 def loginAuth():
     # grabs information from the forms
     username = request.form['username']
@@ -165,7 +165,7 @@ def registerAuthCSR():
         error = "This customer service representative already exists"
         return render_template('registerCSR.html', error = error)
     else:
-        ins = 'INSERT INTO csr VALUES(%s, %s, %s, %s))'
+        ins = 'INSERT INTO CSR VALUES(%s, %s, %s, %s))'
         cursor.execute(ins, (username, password, first_name, last_name))
         conn.commit()
         cursor.close()
@@ -186,7 +186,7 @@ def home():
     return render_template('csrHome.html', username=user, posts=data)
 
 # Displays customer home page
-@app.route('/home')
+@app.route('/custHome')
 def home():
     user = session['username']
     cursor = conn.cursor();
@@ -194,7 +194,7 @@ def home():
     cursor.execute(query, (user))
     data = cursor.fetchall()
     cursor.close()
-    return render_template('home.html', username=user, posts=data)
+    return render_template('custHome.html', username=user, posts=data)
 # ========================================================
 
 # Upload an order

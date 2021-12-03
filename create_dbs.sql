@@ -1,4 +1,5 @@
 CREATE TABLE User(
+  username varchar(50),
 	pwd varchar(50),
   anon_code varchar(50),
   first_name varchar(50),
