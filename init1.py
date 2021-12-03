@@ -76,6 +76,10 @@ def registerCSR():
 def csrPage():
     return render_template('csrPage.html')
 
+@app.route('/homeCSR')
+def homeCSR():
+    return render_template('homeCSR.html')
+
 # Define route for register
 @app.route('/customerPage')
 def customerPage():
@@ -142,7 +146,7 @@ def registerAuth():
     # grabs information from the forms
     username = request.form['username']
     pwd = request.form['pwd'] # + SALT 
-    print(f"{pwd=}")
+    # print(f"{pwd=}")
     hashed_password = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
     randomString = string.ascii_uppercase + string.digits
     anon_code = ''.join(random.choice(randomString) for i in range(8))
