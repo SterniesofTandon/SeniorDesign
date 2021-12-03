@@ -256,6 +256,12 @@ def uploadOrder():
         caption = request.form.get('caption')
         display = request.form.get('display')
 
+        #Grab Anoncode
+        query = "SELECT anon_code FROM user WHERE username = %s"
+        with conn.cursor() as cursor:
+            cursor.execute(query, (session["username"]))
+            anon_code = cursor.fetchone()
+
         #Post to all followers
         if True:
             query = "INSERT INTO Orders (postingDate, filePath, caption, poster) " \
@@ -264,6 +270,15 @@ def uploadOrder():
                 cursor.execute(query, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, userName))
                 conn.commit()
                 cursor.close()
+                #Encrypted upload
+            query = "INSERT INTO OrdersE (postingDate, filePath, caption, posterE) " \
+                    "VALUES (%s, %s, %s, %s)"
+            with conn.cursor() as cursor:
+                cursor.execute(query, (curr_time, image_name, caption, anon_code))
+                conn.commit()
+                cursor.close()
+        anon_code = anon_code['anon_code']
+        cursor.close()
 
         message = "Order successfully uploaded."
         return render_template("upload.html", message=message)
