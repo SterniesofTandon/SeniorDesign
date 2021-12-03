@@ -255,6 +255,7 @@ def uploadOrder():
         userName = session["username"]
         caption = request.form.get('caption')
         display = request.form.get('display')
+        curr_time = time.strftime('%Y-%m-%d %H:%M:%S')
 
         #Grab Anoncode
         query = "SELECT anon_code FROM user WHERE username = %s"
@@ -263,7 +264,7 @@ def uploadOrder():
             anon_code = cursor.fetchone()
 
         #Post to all followers
-        if True:
+        if True: 
             query = "INSERT INTO Orders (postingDate, filePath, caption, poster) " \
                     "VALUES (%s, %s, %s, %s)"
             with conn.cursor() as cursor:
