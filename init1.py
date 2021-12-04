@@ -260,30 +260,31 @@ def uploadOrder():
         caption = request.form.get('caption')
         display = request.form.get('display')
         curr_time = time.strftime('%Y-%m-%d %H:%M:%S')
+        ord_num = str(random.randint(0,100))
 
         #Grab Anoncode
         query = "SELECT anon_code FROM user WHERE username = %s"
         with conn.cursor() as cursor:
             cursor.execute(query, (session["username"]))
             anon_code = cursor.fetchone()
+            cursor.close()
+        anon_code = anon_code['anon_code']
 
         #Post to all followers
         if True: 
-            query = "INSERT INTO Orders (postingDate, filePath, caption, poster) " \
-                    "VALUES (%s, %s, %s, %s)"
+            query = "INSERT INTO Orders (pID, postingDate, filePath, caption, poster) " \
+                    "VALUES (%s, %s, %s, %s, %s)"
             with conn.cursor() as cursor:
-                cursor.execute(query, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, userName))
+                cursor.execute(query, (ord_num, curr_time, image_name, caption, anon_code))
                 conn.commit()
                 cursor.close()
-                #Encrypted upload
-            query = "INSERT INTO OrdersE (postingDate, filePath, caption, posterE) " \
-                    "VALUES (%s, %s, %s, %s)"
+            # #Encrypted upload
+            query = "INSERT INTO OrdersE (pID, postingDate, filePath, caption, posterE) " \
+                    "VALUES (%s, %s, %s, %s, %s)"
             with conn.cursor() as cursor:
-                cursor.execute(query, (curr_time, image_name, caption, anon_code))
+                cursor.execute(query, (ord_num, curr_time, image_name, caption, anon_code))
                 conn.commit()
                 cursor.close()
-        anon_code = anon_code['anon_code']
-        cursor.close()
 
         message = "Order successfully uploaded."
         return render_template("upload.html", message=message)
@@ -293,6 +294,7 @@ def uploadOrder():
         return render_template("upload.html", message=message)
 
 # View orders (SEVERAL PARTS)
+#CUSTOMER SIDE
 @app.route("/orders", methods = ["GET"])
 @login_required
 def orders(): 
@@ -323,12 +325,51 @@ def viewOrders(pID):
     name = cursor.fetchall()
 
     #username of people who Reacted
-    query4 = "SELECT username, reactionTime, comment FROM ReactTo WHERE pID = %s "
+    query4 = "SELECT anon_code, reactionTime, comment FROM ReactTo WHERE pID = %s "
     cursor = conn.cursor()
     cursor.execute(query4, (pID))
     comment = cursor.fetchall()
 
     return render_template("viewOrders.html", photos = data, names = name, comments = comment)
+
+#CSR SIDE
+@app.route("/ordersCSR", methods = ["GET"])
+@login_required
+def ordersCSR(): 
+    user = session["username"]
+    cursor = conn.cursor()
+    query = "SELECT pID, posterE, filePath FROM OrdersE ORDER BY postingDate DESC"
+    cursor.execute(query)
+    photos = cursor.fetchall()
+    cursor.close()
+    
+    return render_template("ordersCSR.html", photos = photos)
+
+@app.route("/viewOrdersCSR/<int:pID>", methods=["GET", "POST"])
+@login_required
+def viewOrdersCSR(pID):
+    user = session["username"]
+    
+    #query for pID, filePath, postingDate
+    cursor = conn.cursor()
+    query = "SELECT pID, postingDate, filePath FROM OrdersE WHERE pID=%s"
+    cursor.execute(query, (pID))
+    data = cursor.fetchall()
+    print(data)
+
+    #first and last name of the poster 
+    query2 = "SELECT first_nameE, last_nameE FROM userE"
+    cursor = conn.cursor()
+    cursor.execute(query2)
+    name = cursor.fetchall()
+
+    #username of people who Reacted
+    query4 = "SELECT anon_code, reactionTime, comment FROM ReactTo"
+    cursor = conn.cursor()
+    cursor.execute(query4)
+    comment = cursor.fetchall()
+
+    return render_template("viewOrdersCSR.html", photos = data, names = name, comments = comment)
 
 @app.route("/photo/<image_name>", methods=["GET"])
 def image(image_name):
@@ -342,11 +383,23 @@ def comment(pID):
     cursor = conn.cursor()
 
     if(request.form): 	
-        user = session["username"]
+        # user = session["username"]
+        
         comment = request.form["comment"]
-    
-        query = "INSERT INTO ReactTo (username, pID, reactionTime, comment) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (user, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
+        #Grab Anoncode
+        query = "SELECT anon_code FROM user WHERE username = %s"
+        with conn.cursor() as cursor:
+            cursor.execute(query, (session["username"]))
+            anon_code = cursor.fetchone()
+            cursor.close()
+        anon_code = anon_code['anon_code']
+
+        cursor = conn.cursor()
+        query = "INSERT INTO ReactTo (anon_code, pID, reactionTime, comment) VALUES (%s, %s, %s, %s)"
+        # cursor.execute(query, (user, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
+        cursor.execute(query, (anon_code, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
+        cursor.close()
+
         return redirect(url_for('viewOrders', pID = pID))
         
     cursor.close()
