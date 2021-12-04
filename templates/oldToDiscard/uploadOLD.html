@@ -1,0 +1,35 @@
+<html>
+	<head>
+    <title>Photo Upload</title>
+    </head>
+    <body text= "black" >
+        <h3>Upload an Order</h3>
+        <div>
+            <form action="/uploadOrder" method="post" enctype="multipart/form-data">
+                <input type="file" name="imageToUpload" accept="image/*">
+                <br/>
+                <p><input type = "text" name = "caption" placeholder="Enter the order number"></p>
+
+            <!-- <select name = "display">
+                <option name = "All Followers" SELECTED>All Followers</option>
+               
+                {% for group in groups%}
+                <option name = "Group Only">Group: {{group.groupName}} | groupCreator: {{group.groupCreator}}</option>"
+                {% endfor %}
+                </select>
+                <br/> -->
+                <p><input type="submit" value="Submit"></p>
+
+            </form>
+        </div>
+        {% if message %}
+            {{ message }}
+        {% endif %}
+
+   
+
+        <br/>
+        <a href="/home">Go back</a>
+    </body>
+</html>
+
