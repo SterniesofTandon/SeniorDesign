@@ -21,13 +21,13 @@ CREATE TABLE userE(
     FOREIGN KEY (anon_code) REFERENCES user(anon_code)
 );
 
-CREATE TABLE csr(
-	username varchar(50),
-	pwd varchar(50),
-    first_name varchar(50),
-	last_name varchar(50),
-	PRIMARY KEY(username)
-);
+-- CREATE TABLE csr(
+-- 	username varchar(50),
+-- 	pwd varchar(50),
+--     first_name varchar(50),
+-- 	last_name varchar(50),
+-- 	PRIMARY KEY(username)
+-- );
 
 CREATE TABLE blog(
 	blog_post varchar(500),

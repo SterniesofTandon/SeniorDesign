@@ -112,7 +112,7 @@ def loginAuth():
         error = 'Invalid login or username'
         return render_template('login.html', error=error)
 
-# Authenticates the login
+# Authenticates the login for CSR
 @app.route('/loginAuthCSR', methods=['GET', 'POST'])
 def loginAuthCSR():
     # grabs information from the forms
@@ -120,8 +120,8 @@ def loginAuthCSR():
     pwd = request.form['pwd']
     # cursor used to send queries
     cursor = conn.cursor()
-    # executes query -> TODO: ADD func called userExists
-    query = 'SELECT * FROM csr WHERE username = %s and pwd = %s'
+    # executes query
+    query = 'SELECT * FROM user WHERE username = %s and pwd = %s'
     cursor.execute(query, (username, pwd))
     # stores the results in a variable
     data = cursor.fetchone()
@@ -137,6 +137,31 @@ def loginAuthCSR():
         # returns an error message to the html page
         error = 'Invalid login or username'
         return render_template('loginCSR.html', error=error)
+
+# @app.route('/loginAuthCSR', methods=['GET', 'POST'])
+# def loginAuthCSR():
+#     # grabs information from the forms
+#     username = request.form['username']
+#     pwd = request.form['pwd']
+#     # cursor used to send queries
+#     cursor = conn.cursor()
+#     # executes query -> TODO: ADD func called userExists
+#     query = 'SELECT * FROM csr WHERE username = %s and pwd = %s'
+#     cursor.execute(query, (username, pwd))
+#     # stores the results in a variable
+#     data = cursor.fetchone()
+#     # use fetchall() if you are expecting more than 1 data row
+#     cursor.close()
+#     error = None
+#     if(data): #user exists
+#         # creates a session for the the user
+#         # session is a built in
+#         session['username'] = username
+#         return redirect(url_for('homeCSR'))
+#     else:
+#         # returns an error message to the html page
+#         error = 'Invalid login or username'
+#         return render_template('loginCSR.html', error=error)
 
 """ 
 Registers the customer
@@ -174,7 +199,7 @@ def registerAuth():
     # use fetchall() if you are expecting more than 1 data row
     error = None
     if(data):
-        print("User already exists")
+        # print("User already exists")
         # If the previous query returns data, then user exists
         error = "This user already exists"
         return render_template('register.html', error = error)
@@ -189,21 +214,25 @@ def registerAuth():
         cursor.close()
         return render_template('login.html')
 
-# Authenticates the register for the customer service representatives
-@app.route('/registerAuthCSR', methods=['GET', 'POST'])
+@app.route('/registerAuthCSR', methods=['POST'])
 def registerAuthCSR():
     # grabs information from the forms
     username = request.form['username']
     pwd = request.form['pwd'] # + SALT 
     hashed_password = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
-    #information to be encrypted:
+    randomString = string.ascii_uppercase + string.digits
+    anon_code = ''.join(random.choice(randomString) for i in range(8))
+    #Information that gets encrypted below
     first_name = request.form['first_name']
     last_name = request.form['last_name']
+    key_str = "08242007"
+    first_nameE = first_name
+    last_nameE = last_name
 
     # cursor used to send queries
     cursor = conn.cursor()
     # executes query
-    query = 'SELECT * FROM csr WHERE username = %s'
+    query = 'SELECT * FROM user WHERE username = %s'
     cursor.execute(query, (username))
     # stores the results in a variable
     data = cursor.fetchone()
@@ -214,11 +243,42 @@ def registerAuthCSR():
         error = "This customer service representative already exists"
         return render_template('registerCSR.html', error = error)
     else:
-        ins = '''INSERT INTO csr VALUES(%s, %s, %s, %s)'''
-        cursor.execute(ins, (username, pwd, first_name, last_name))
+        ins = '''INSERT INTO user VALUES(%s, %s, %s, %s, %s, %s, %s, %s)'''
+        cursor.execute(ins, (username, pwd, anon_code, first_name, last_name, None, None, None))
         conn.commit()
         cursor.close()
         return render_template('loginCSR.html')
+
+# Authenticates the register for the customer service representatives
+# @app.route('/registerAuthCSR', methods=['GET', 'POST'])
+# def registerAuthCSR():
+#     # grabs information from the forms
+#     username = request.form['username']
+#     pwd = request.form['pwd'] # + SALT 
+#     hashed_password = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
+#     #information to be encrypted:
+#     first_name = request.form['first_name']
+#     last_name = request.form['last_name']
+
+#     # cursor used to send queries
+#     cursor = conn.cursor()
+#     # executes query
+#     query = 'SELECT * FROM csr WHERE username = %s'
+#     cursor.execute(query, (username))
+#     # stores the results in a variable
+#     data = cursor.fetchone()
+#     # use fetchall() if you are expecting more than 1 data row
+#     error = None
+#     if(data):
+#         # If the previous query returns data, then user exists
+#         error = "This customer service representative already exists"
+#         return render_template('registerCSR.html', error = error)
+#     else:
+#         ins = '''INSERT INTO csr VALUES(%s, %s, %s, %s)'''
+#         cursor.execute(ins, (username, pwd, first_name, last_name))
+#         conn.commit()
+#         cursor.close()
+#         return render_template('loginCSR.html')
 
 # Displays home page
 @app.route('/home')
@@ -355,7 +415,7 @@ def viewOrdersCSR(pID):
     query = "SELECT pID, postingDate, filePath FROM OrdersE WHERE pID=%s"
     cursor.execute(query, (pID))
     data = cursor.fetchall()
-    print(data)
+    # print(data)
 
     #first and last name of the poster 
     query2 = "SELECT first_nameE, last_nameE FROM userE"
