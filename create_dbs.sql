@@ -40,11 +40,11 @@ CREATE TABLE belongTo(
   username varchar(32),
   groupName varchar(32),
   groupCreator varchar(32)
-)
+);
 
 CREATE TABLE ReactTo (
-        anon_code VARCHAR(256),
-        pID VARCHAR(256),
+        anon_code VARCHAR(180),
+        pID VARCHAR(180),
         reactionTime DATETIME,
         comment VARCHAR(1000),    
 	    PRIMARY KEY (reactionTime),
