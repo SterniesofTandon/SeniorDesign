@@ -22,19 +22,25 @@ app = Flask(__name__,
             static_folder='templates/static',
             template_folder='templates')
 
-Bootstrap(app)
+app = Bootstrap(app)
+app.config['MYSQL_DATABASE_USER'] = 'b7a4c6df042881'
+app.config['MYSQL_DATABASE_PASSWORD'] = '103d0b48'
+app.config['MYSQL_DATABASE_DB'] = 'heroku_4cd6105b897017f'
+app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-04.cleardb.com'
+
+mysql = MySQL()
 # mysql.init_app(Bootstrap(app))
 SALT = "sd102699"
-
+mysql.init_app(app)
 
 # Configure MySQL
-conn = pymysql.connect(host='localhost',
-                       port = 8889,
-                       user='root',
-                       password='root',
-                       db='FlaskDemo',
-                       charset='utf8mb4',
-                       cursorclass=pymysql.cursors.DictCursor)
+# conn = pymysql.connect(host='localhost',
+#                        port = 8889,
+#                        user='root',
+#                        password='root',
+#                        db='FlaskDemo',
+#                        charset='utf8mb4',
+#                        cursorclass=pymysql.cursors.DictCursor)
 
 
 # if __name__ == '__main__':
