@@ -14,6 +14,8 @@ from flask import request, send_from_directory
 from functools import wraps
 IMAGES_DIR = os.path.join(os.getcwd(), "images")
 from flask_bootstrap import Bootstrap
+import mysql.connector
+
 
 
 # Initialize the app from Flask
@@ -34,7 +36,16 @@ mysql = MySQL()
 SALT = "sd102699"
 mysql.init_app(app)
 # conn = pymysql.connect()
-conn = mysql.connect()
+
+connection = mysql.connector.connect(
+    host="us-cdbr-east-04.cleardb.com", 
+#   port="3306",
+    user="b7a4c6df042881",
+    password="103d0b48",
+    database="heroku_4cd6105b897017f"
+#   auth_plugin='mysql_native_password'
+  )
+conn = connection.cursor()
 
 # Configure MySQL
 # conn = pymysql.connect(host='localhost',
