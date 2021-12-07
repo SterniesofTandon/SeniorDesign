@@ -37,6 +37,13 @@ SALT = "sd102699"
 # mysql.init_app(app)
 # conn = pymysql.connect()
 
+connection = pymysql.connect(
+    host="us-cdbr-east-04.cleardb.com", 
+    user="b7a4c6df042881",
+    password="103d0b48",
+    database="heroku_4cd6105b897017f"
+  )
+
 # connection = mysql.connector.connect(
 #     host="us-cdbr-east-04.cleardb.com", 
 #     user="b7a4c6df042881",
@@ -49,13 +56,13 @@ SALT = "sd102699"
 # conn = connection.cursor()
 
 # Configure MySQL
-conn = pymysql.connect(host='localhost',
-                       port = 8889,
-                       user='root',
-                       password='root',
-                       db='FlaskDemo',
-                       charset='utf8mb4',
-                       cursorclass=pymysql.cursors.DictCursor)
+# conn = pymysql.connect(host='localhost',
+#                        port = 8889,
+#                        user='root',
+#                        password='root',
+#                        db='FlaskDemo',
+#                        charset='utf8mb4',
+#                        cursorclass=pymysql.cursors.DictCursor)
 
 
 # if __name__ == '__main__':
