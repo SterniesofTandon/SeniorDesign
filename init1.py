@@ -3,7 +3,7 @@
 #import only what we need
 from flask import *
 import pymysql.cursors
-from flaskext.mysql import MySQL
+# from flaskext.mysql import MySQL
 import hashlib
 import os
 import time
@@ -14,7 +14,7 @@ from flask import request, send_from_directory
 from functools import wraps
 IMAGES_DIR = os.path.join(os.getcwd(), "images")
 from flask_bootstrap import Bootstrap
-import mysql.connector
+# import mysql.connector
 
 
 
