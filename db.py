@@ -12,4 +12,3 @@ mysql.init_app(app)
 
 
 # mysql --host=us-cdbr-east-04.cleardb.com --user=b7a4c6df042881 --password=103d0b48 --reconnect heroku_4cd6105b897017f
-
