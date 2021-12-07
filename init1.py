@@ -122,14 +122,14 @@ def loginAuth():
     pwd = request.form['pwd']
 
     # cursor used to send queries
-    cursor = conn.cursor()
+    # cursor = conn.cursor()
     # executes query -> TODO: ADD func called userExists
     query = 'SELECT * FROM user WHERE username = %s and pwd = %s'
-    cursor.execute(query, (username, pwd))
+    conn.execute(query, (username, pwd))
     # stores the results in a variable
-    data = cursor.fetchone()
+    data = conn.fetchone()
     # use fetchall() if you are expecting more than 1 data row
-    cursor.close()
+    # cursor.close()
     error = None
     if(data): #user exists
         # creates a session for the the user
