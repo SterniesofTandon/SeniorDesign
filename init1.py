@@ -33,7 +33,8 @@ mysql = MySQL()
 # mysql.init_app(Bootstrap(app))
 SALT = "sd102699"
 mysql.init_app(app)
-conn = pymysql.connect()
+# conn = pymysql.connect()
+conn = mysql.connect()
 
 # Configure MySQL
 # conn = pymysql.connect(host='localhost',
