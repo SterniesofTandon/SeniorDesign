@@ -13,7 +13,6 @@
         <th>Messaging</th>
 
     {% for photo in photos %}
-        {% for p in names %}
         <tr>
             <td>{{photo.pID}}</td>
             <td><a href="/photo/{{photo.filePath}}"> {{photo.pID}}</a></td>
@@ -26,8 +25,6 @@
             </form></td>
 
         </tr>
-           
-        {% endfor %}
     {% endfor %}
     </table>
 
@@ -50,7 +47,7 @@
     {% endif %}
 
     <br/>
-    <a href="/orders">Go back</a>
+    <a href="/ordersCSR">Go back</a>
     </body>
 </html>
 

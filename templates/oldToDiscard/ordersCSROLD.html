@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+   
+
+    <h1>Orders</h1>
+    <table border="1">
+        <th>Order #</th>
+        <th> Order Information </th>
+
+    {% for photo in photos %}
+        
+        <tr>
+            <td>{{photo.pID}}</td>
+            <td><a href="/viewOrdersCSR/{{photo.pID}}">Page</a></td>
+        </tr>
+           
+       
+    {% endfor %}
+    </table>
+
+    {% if message %}
+        {{ message }}
+    {% endif %}
+
+    <br>
+
+    <a href="/homeCSR">Go back</a>
+    </body>
+</html>
+
+

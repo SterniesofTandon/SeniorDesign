@@ -90,6 +90,14 @@ def registerCSR():
 def csrPage():
     return render_template('csrPage.html')
 
+<<<<<<< HEAD
+=======
+@app.route('/homeCSR')
+def homeCSR():
+    return render_template('homeCSR.html')
+
+# Define route for register
+>>>>>>> 520386e12e55e925d1d25d7b128d58f7e964e322
 @app.route('/customerPage')
 def customerPage():
     return render_template('customerPage.html')
@@ -121,7 +129,11 @@ def loginAuth():
         error = 'Invalid login or username'
         return render_template('login.html', error=error)
 
+<<<<<<< HEAD
 # Authenticates the login for the CSR
+=======
+# Authenticates the login for CSR
+>>>>>>> 520386e12e55e925d1d25d7b128d58f7e964e322
 @app.route('/loginAuthCSR', methods=['GET', 'POST'])
 def loginAuthCSR():
     # grabs information from the forms
@@ -129,8 +141,8 @@ def loginAuthCSR():
     pwd = request.form['pwd']
     # cursor used to send queries
     cursor = conn.cursor()
-    # executes query -> TODO: ADD func called userExists
-    query = 'SELECT * FROM csr WHERE username = %s and pwd = %s'
+    # executes query
+    query = 'SELECT * FROM user WHERE username = %s and pwd = %s'
     cursor.execute(query, (username, pwd))
     # stores the results in a variable
     data = cursor.fetchone()
@@ -147,13 +159,44 @@ def loginAuthCSR():
         error = 'Invalid login or username'
         return render_template('loginCSR.html', error=error)
 
+<<<<<<< HEAD
 # Authenticates registration for a new customer
+=======
+# @app.route('/loginAuthCSR', methods=['GET', 'POST'])
+# def loginAuthCSR():
+#     # grabs information from the forms
+#     username = request.form['username']
+#     pwd = request.form['pwd']
+#     # cursor used to send queries
+#     cursor = conn.cursor()
+#     # executes query -> TODO: ADD func called userExists
+#     query = 'SELECT * FROM csr WHERE username = %s and pwd = %s'
+#     cursor.execute(query, (username, pwd))
+#     # stores the results in a variable
+#     data = cursor.fetchone()
+#     # use fetchall() if you are expecting more than 1 data row
+#     cursor.close()
+#     error = None
+#     if(data): #user exists
+#         # creates a session for the the user
+#         # session is a built in
+#         session['username'] = username
+#         return redirect(url_for('homeCSR'))
+#     else:
+#         # returns an error message to the html page
+#         error = 'Invalid login or username'
+#         return render_template('loginCSR.html', error=error)
+
+""" 
+Registers the customer
+"""
+>>>>>>> 520386e12e55e925d1d25d7b128d58f7e964e322
 @app.route('/registerAuth', methods=['POST'])
 def registerAuth():
     # grabs information from the forms
     username = request.form['username']
     pwd = request.form['pwd'] # + SALT 
-    print(f"{pwd=}")
+    # print(f"{pwd=}")
     hashed_password = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
     randomString = string.ascii_uppercase + string.digits
     anon_code = ''.join(random.choice(randomString) for i in range(8))
@@ -181,7 +224,7 @@ def registerAuth():
     # use fetchall() if you are expecting more than 1 data row
     error = None
     if(data):
-        print("User already exists")
+        # print("User already exists")
         # If the previous query returns data, then user exists
         error = "This user already exists"
         return render_template('register.html', error = error)
@@ -196,21 +239,25 @@ def registerAuth():
         cursor.close()
         return render_template('login.html')
 
-# Authenticates the register for the customer service representatives
-@app.route('/registerAuthCSR', methods=['GET', 'POST'])
+@app.route('/registerAuthCSR', methods=['POST'])
 def registerAuthCSR():
     # grabs information from the forms
     username = request.form['username']
     pwd = request.form['pwd'] # + SALT 
     hashed_password = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
-    #information to be encrypted:
+    randomString = string.ascii_uppercase + string.digits
+    anon_code = ''.join(random.choice(randomString) for i in range(8))
+    #Information that gets encrypted below
     first_name = request.form['first_name']
     last_name = request.form['last_name']
+    key_str = "08242007"
+    first_nameE = first_name
+    last_nameE = last_name
 
     # cursor used to send queries
     cursor = conn.cursor()
     # executes query
-    query = 'SELECT * FROM csr WHERE username = %s'
+    query = 'SELECT * FROM user WHERE username = %s'
     cursor.execute(query, (username))
     # stores the results in a variable
     data = cursor.fetchone()
@@ -221,11 +268,42 @@ def registerAuthCSR():
         error = "This customer service representative already exists"
         return render_template('registerCSR.html', error = error)
     else:
-        ins = '''INSERT INTO csr VALUES(%s, %s, %s, %s)'''
-        cursor.execute(ins, (username, pwd, first_name, last_name))
+        ins = '''INSERT INTO user VALUES(%s, %s, %s, %s, %s, %s, %s, %s)'''
+        cursor.execute(ins, (username, pwd, anon_code, first_name, last_name, None, None, None))
         conn.commit()
         cursor.close()
         return render_template('loginCSR.html')
+
+# Authenticates the register for the customer service representatives
+# @app.route('/registerAuthCSR', methods=['GET', 'POST'])
+# def registerAuthCSR():
+#     # grabs information from the forms
+#     username = request.form['username']
+#     pwd = request.form['pwd'] # + SALT 
+#     hashed_password = hashlib.sha256(pwd.encode('utf-8')).hexdigest()
+#     #information to be encrypted:
+#     first_name = request.form['first_name']
+#     last_name = request.form['last_name']
+
+#     # cursor used to send queries
+#     cursor = conn.cursor()
+#     # executes query
+#     query = 'SELECT * FROM csr WHERE username = %s'
+#     cursor.execute(query, (username))
+#     # stores the results in a variable
+#     data = cursor.fetchone()
+#     # use fetchall() if you are expecting more than 1 data row
+#     error = None
+#     if(data):
+#         # If the previous query returns data, then user exists
+#         error = "This customer service representative already exists"
+#         return render_template('registerCSR.html', error = error)
+#     else:
+#         ins = '''INSERT INTO csr VALUES(%s, %s, %s, %s)'''
+#         cursor.execute(ins, (username, pwd, first_name, last_name))
+#         conn.commit()
+#         cursor.close()
+#         return render_template('loginCSR.html')
 
 # Displays home page
 @app.route('/home')
@@ -266,30 +344,32 @@ def uploadOrder():
         userName = session["username"]
         caption = request.form.get('caption')
         display = request.form.get('display')
+        curr_time = time.strftime('%Y-%m-%d %H:%M:%S')
+        ord_num = str(random.randint(0,100))
 
         #Grab Anoncode
         query = "SELECT anon_code FROM user WHERE username = %s"
         with conn.cursor() as cursor:
             cursor.execute(query, (session["username"]))
             anon_code = cursor.fetchone()
+            cursor.close()
+        anon_code = anon_code['anon_code']
 
         #Post to all followers
-        if True:
-            query = "INSERT INTO Orders (postingDate, filePath, caption, poster) " \
-                    "VALUES (%s, %s, %s, %s)"
+        if True: 
+            query = "INSERT INTO Orders (pID, postingDate, filePath, caption, poster) " \
+                    "VALUES (%s, %s, %s, %s, %s)"
             with conn.cursor() as cursor:
-                cursor.execute(query, (time.strftime('%Y-%m-%d %H:%M:%S'), image_name, caption, userName))
+                cursor.execute(query, (ord_num, curr_time, image_name, caption, anon_code))
                 conn.commit()
                 cursor.close()
-                #Encrypted upload
-            query = "INSERT INTO OrdersE (postingDate, filePath, caption, posterE) " \
-                    "VALUES (%s, %s, %s, %s)"
+            # #Encrypted upload
+            query = "INSERT INTO OrdersE (pID, postingDate, filePath, caption, posterE) " \
+                    "VALUES (%s, %s, %s, %s, %s)"
             with conn.cursor() as cursor:
-                cursor.execute(query, (curr_time, image_name, caption, anon_code))
+                cursor.execute(query, (ord_num, curr_time, image_name, caption, anon_code))
                 conn.commit()
                 cursor.close()
-        anon_code = anon_code['anon_code']
-        cursor.close()
 
         message = "Order successfully uploaded."
         return render_template("upload.html", message=message)
@@ -299,6 +379,7 @@ def uploadOrder():
         return render_template("upload.html", message=message)
 
 # View orders (SEVERAL PARTS)
+#CUSTOMER SIDE
 @app.route("/orders", methods = ["GET"])
 @login_required
 def orders(): 
@@ -329,12 +410,51 @@ def viewOrders(pID):
     name = cursor.fetchall()
 
     #username of people who Reacted
-    query4 = "SELECT username, reactionTime, comment FROM ReactTo WHERE pID = %s "
+    query4 = "SELECT anon_code, reactionTime, comment FROM ReactTo WHERE pID = %s "
     cursor = conn.cursor()
     cursor.execute(query4, (pID))
     comment = cursor.fetchall()
 
     return render_template("viewOrders.html", photos = data, names = name, comments = comment)
+
+#CSR SIDE
+@app.route("/ordersCSR", methods = ["GET"])
+@login_required
+def ordersCSR(): 
+    user = session["username"]
+    cursor = conn.cursor()
+    query = "SELECT pID, posterE, filePath FROM OrdersE ORDER BY postingDate DESC"
+    cursor.execute(query)
+    photos = cursor.fetchall()
+    cursor.close()
+    
+    return render_template("ordersCSR.html", photos = photos)
+
+@app.route("/viewOrdersCSR/<int:pID>", methods=["GET", "POST"])
+@login_required
+def viewOrdersCSR(pID):
+    user = session["username"]
+    
+    #query for pID, filePath, postingDate
+    cursor = conn.cursor()
+    query = "SELECT pID, postingDate, filePath FROM OrdersE WHERE pID=%s"
+    cursor.execute(query, (pID))
+    data = cursor.fetchall()
+    # print(data)
+
+    #first and last name of the poster 
+    query2 = "SELECT first_nameE, last_nameE FROM userE"
+    cursor = conn.cursor()
+    cursor.execute(query2)
+    name = cursor.fetchall()
+
+    #username of people who Reacted
+    query4 = "SELECT anon_code, reactionTime, comment FROM ReactTo"
+    cursor = conn.cursor()
+    cursor.execute(query4)
+    comment = cursor.fetchall()
+
+    return render_template("viewOrdersCSR.html", photos = data, names = name, comments = comment)
 
 @app.route("/photo/<image_name>", methods=["GET"])
 def image(image_name):
@@ -348,11 +468,23 @@ def comment(pID):
     cursor = conn.cursor()
 
     if(request.form): 	
-        user = session["username"]
+        # user = session["username"]
+        
         comment = request.form["comment"]
-    
-        query = "INSERT INTO ReactTo (username, pID, reactionTime, comment) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (user, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
+        #Grab Anoncode
+        query = "SELECT anon_code FROM user WHERE username = %s"
+        with conn.cursor() as cursor:
+            cursor.execute(query, (session["username"]))
+            anon_code = cursor.fetchone()
+            cursor.close()
+        anon_code = anon_code['anon_code']
+
+        cursor = conn.cursor()
+        query = "INSERT INTO ReactTo (anon_code, pID, reactionTime, comment) VALUES (%s, %s, %s, %s)"
+        # cursor.execute(query, (user, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
+        cursor.execute(query, (anon_code, pID, time.strftime('%Y-%m-%d %H:%M:%S'), comment))	
+        cursor.close()
+
         return redirect(url_for('viewOrders', pID = pID))
         
     cursor.close()
@@ -368,7 +500,8 @@ app.secret_key = 'somekeythatyouwillneverguess'
 # debug = True -> you don't have to restart flask
 # for changes to go through, TURN OFF FOR PRODUCTION
 if __name__ == "__main__":
-    app.run('127.0.0.1', 5000, debug = True)
+    # app.run('127.0.0.1', 5000, debug = True)
+    app.run()
 
 @app.route('/follow', methods = ["GET", "POST"])
 @login_required
