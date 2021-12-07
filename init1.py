@@ -167,6 +167,7 @@ def loginAuthCSR():
         error = 'Invalid login or username'
         return render_template('loginCSR.html', error=error)
 
+
 # @app.route('/loginAuthCSR', methods=['GET', 'POST'])
 # def loginAuthCSR():
 #     # grabs information from the forms
