@@ -53,7 +53,7 @@ connection = pymysql.connect(
 #   port="3306",
 #   auth_plugin='mysql_native_password'
 
-# conn = connection.cursor()
+conn = connection.cursor()
 
 # Configure MySQL
 # conn = pymysql.connect(host='localhost',
