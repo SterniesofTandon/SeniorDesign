@@ -525,40 +525,4 @@ def follow():
 		return render_template("homeCSR.html")
 
 	return render_template("follow.html")
-
-
-'''
-@app.route('/post', methods=['GET', 'POST'])
-def post():
-    username = session['username']
-    cursor = conn.cursor();
-    blog = request.form['blog']
-    query = 'INSERT INTO blog (blog_post, username) VALUES(%s, %s)'
-    cursor.execute(query, (blog, username))
-    conn.commit()
-    cursor.close()
-    return redirect(url_for('home'))
-
-@app.route('/select_blogger')
-def select_blogger():
-    #check that user is logged in
-    #username = session['username']
-    #should throw exception if username not found
-
-    cursor = conn.cursor();
-    query = 'SELECT DISTINCT username FROM blog'
-    cursor.execute(query)
-    data = cursor.fetchall()
-    cursor.close()
-    return render_template('select_blogger.html', user_list=data)
-
-@app.route('/show_posts', methods=["GET", "POST"])
-def show_posts():
-    poster = request.args['poster']
-    cursor = conn.cursor();
-    query = 'SELECT ts, blog_post FROM blog WHERE username = %s ORDER BY ts DESC'
-    cursor.execute(query, poster)
-    data = cursor.fetchall()
-    cursor.close()
-    return render_template('show_posts.html', poster_name=poster, posts=data)
-'''
+    
