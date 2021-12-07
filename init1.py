@@ -22,8 +22,8 @@ app = Flask(__name__,
             static_folder='templates/static',
             template_folder='templates')
 
-# Bootstrap(app)
-mysql.init_app(Bootstrap(app))
+Bootstrap(app)
+# mysql.init_app(Bootstrap(app))
 SALT = "sd102699"
 
 
@@ -37,8 +37,8 @@ conn = pymysql.connect(host='localhost',
                        cursorclass=pymysql.cursors.DictCursor)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)                       
+# if __name__ == '__main__':
+#     app.run(debug=True)                       
 
 # Define a route to hello function
 @app.route('/')
