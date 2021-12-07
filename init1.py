@@ -122,7 +122,7 @@ def loginAuth():
     pwd = request.form['pwd']
 
     # cursor used to send queries
-    # cursor = conn.cursor()
+    cursor = conn.cursor()
     # executes query -> TODO: ADD func called userExists
     query = 'SELECT * FROM user WHERE username = %s and pwd = %s'
     cursor.execute(query, (username, pwd))
