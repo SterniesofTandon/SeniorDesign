@@ -151,7 +151,7 @@ def loginAuthCSR():
     cursor = conn.cursor()
     # executes query
     query = 'SELECT * FROM user WHERE username = %s and pwd = %s'
-    cursor.execute(query, (username, pwd))
+    cursor.execute((query, (username, pwd)))
     # stores the results in a variable
     data = cursor.fetchone()
     # use fetchall() if you are expecting more than 1 data row
