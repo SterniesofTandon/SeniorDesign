@@ -3,6 +3,7 @@
 #import only what we need
 from flask import *
 import pymysql.cursors
+from flaskext.mysql import MySQL
 import hashlib
 import os
 import time
