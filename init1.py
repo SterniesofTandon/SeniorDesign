@@ -39,12 +39,13 @@ mysql.init_app(app)
 
 connection = mysql.connector.connect(
     host="us-cdbr-east-04.cleardb.com", 
-#   port="3306",
     user="b7a4c6df042881",
     password="103d0b48",
     database="heroku_4cd6105b897017f"
-#   auth_plugin='mysql_native_password'
   )
+#   port="3306",
+#   auth_plugin='mysql_native_password'
+
 conn = connection.cursor()
 
 # Configure MySQL
