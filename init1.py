@@ -357,7 +357,7 @@ def uploadOrder():
             cursor.execute(query, (session["username"]))
             anon_code = cursor.fetchone()
             cursor.close()
-        anon_code = anon_code['anon_code']
+        # anon_code = anon_code['anon_code']
 
         #Post to all followers
         if True: 
