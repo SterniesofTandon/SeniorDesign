@@ -37,7 +37,7 @@ SALT = "sd102699"
 # mysql.init_app(app)
 # conn = pymysql.connect()
 
-connection = pymysql.connect(
+conn = pymysql.connect(
     host="us-cdbr-east-04.cleardb.com", 
     user="b7a4c6df042881",
     password="103d0b48",
@@ -53,7 +53,7 @@ connection = pymysql.connect(
 #   port="3306",
 #   auth_plugin='mysql_native_password'
 
-conn = connection.cursor()
+# conn = connection.cursor()
 
 # Configure MySQL
 # conn = pymysql.connect(host='localhost',
