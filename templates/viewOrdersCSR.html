@@ -59,7 +59,6 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
                             <th>Messaging</th>
                     
                         {% for photo in photos %}
-                            {% for p in names %}
                             <tr>
                                 <td>{{photo.pID}}</td>
                                 <td><a href="/photo/{{photo.filePath}}"> {{photo.pID}}</a></td>
@@ -74,7 +73,6 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
                     
                             </tr>
                                
-                            {% endfor %}
                         {% endfor %} 
 
                         </table>
@@ -90,11 +88,11 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
                     <th>Time</th>
                     <th>Comment</th>
                     {% for comment in comments %}
-                        <tr>
-                            <td>{{comment.anon_code}}</td>
-                            <td>{{comment.reactionTime}}</td>
-                            <td>{{comment.comment}}</td>
-                        </tr>
+                            <tr>
+                                <td>{{comment.anon_code}}</td>
+                                <td>{{comment.reactionTime}}</td>
+                                <td>{{comment.comment}}</td>
+                            </tr>
                     {% endfor %}
                     </table>
 
