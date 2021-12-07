@@ -8,7 +8,7 @@ import os
 import time
 import random
 import string
-from db import *
+# from db import *
 from flask import request, send_from_directory
 from functools import wraps
 IMAGES_DIR = os.path.join(os.getcwd(), "images")
