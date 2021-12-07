@@ -57,10 +57,22 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
                                     <input type="file" name="imageToUpload" accept="image/*">
                                     <br/>
                                     <p><input type = "text" name = "caption" placeholder="Enter the order number"></p>
-
+                    
+                                <!-- <select name = "display">
+                                    <option name = "All Followers" SELECTED>All Followers</option>
+                                   
+                                    {% for group in groups%}
+                                    <option name = "Group Only">Group: {{group.groupName}} | groupCreator: {{group.groupCreator}}</option>"
+                                    {% endfor %}
+                                    </select>
+                                    <br/> -->
                                     <button class="btn btn-outline-danger rounded-pill order-0" type="submit">Submit</button>
                                 </form>
                             </div>
+
+                      <div class="text-center my-5">
+                        <button class="btn btn-outline-danger rounded-pill order-0" onclick=" window.open('/ordersCSR')">View Order</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -71,6 +83,9 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
          
             <!-- end of .container-->
      
+
+
+
 
     </main>
     <!-- ===============================================-->

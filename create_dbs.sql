@@ -21,6 +21,14 @@ CREATE TABLE userE(
     FOREIGN KEY (anon_code) REFERENCES user(anon_code)
 );
 
+-- CREATE TABLE csr(
+-- 	username varchar(50),
+-- 	pwd varchar(50),
+--     first_name varchar(50),
+-- 	last_name varchar(50),
+-- 	PRIMARY KEY(username)
+-- );
+
 CREATE TABLE blog(
 	blog_post varchar(500),
 	username varchar(50),
@@ -52,16 +60,6 @@ CREATE TABLE Orders (
         poster VARCHAR(256),
         PRIMARY KEY (pID),
         FOREIGN KEY (poster) REFERENCES user (anon_code)
-);
-
-CREATE TABLE ReactTo (
-        anon_code VARCHAR(256),
-        pID VARCHAR(256),
-        reactionTime DATETIME,
-        comment VARCHAR(1000),    
-	    PRIMARY KEY (reactionTime),
-        FOREIGN KEY (pID) REFERENCES Orders (pID),
-        FOREIGN KEY (anon_code) REFERENCES user (anon_code)
 );
 
 CREATE TABLE OrdersE (

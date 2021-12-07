@@ -379,7 +379,7 @@ def viewOrders(pID):
     data = cursor.fetchall()
 
     #first and last name of the poster 
-    query2 = "SELECT first_name FROM user WHERE username = %s"
+    query2 = "SELECT first_name, last_name FROM user WHERE username = %s"
     cursor = conn.cursor()
     cursor.execute(query2, (user))
     name = cursor.fetchall()
