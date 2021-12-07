@@ -1,5 +1,5 @@
 Gunicorn==20.0.4
-MySQL==0.0.3
+# MySQL==0.0.3
 astroid==2.0.4
 backports.entry-points-selectable==1.1.1
 certifi==2018.10.15
