@@ -15,7 +15,7 @@ from flask_bootstrap import Bootstrap
 
 
 # Initialize the app from Flask
-
+# Trial for heroku
 app = Flask(__name__,
             static_url_path='', 
             static_folder='templates/static',
