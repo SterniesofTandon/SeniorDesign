@@ -115,7 +115,7 @@ def customerPage():
     return render_template('customerPage.html')
 
 @app.route('/viewOrdersCSR')
-def customerPage():
+def viewOrdersCSR():
     return render_template('viewOrdersCSR.html')
 
 # Authenticates the login
