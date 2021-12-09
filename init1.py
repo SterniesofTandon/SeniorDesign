@@ -114,6 +114,10 @@ def homeCSR():
 def customerPage():
     return render_template('customerPage.html')
 
+@app.route('/viewOrdersCSR')
+def customerPage():
+    return render_template('viewOrdersCSR.html')
+
 # Authenticates the login
 @app.route('/loginAuth', methods=['GET', 'POST'])
 def loginAuth():
@@ -525,4 +529,3 @@ def follow():
 		return render_template("homeCSR.html")
 
 	return render_template("follow.html")
-    
