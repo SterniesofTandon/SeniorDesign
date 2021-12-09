@@ -440,7 +440,7 @@ def ordersCSR():
     return render_template("ordersCSR.html", photos = photos)
 
 @app.route("/viewOrdersCSR/<int:pID>", methods=["GET", "POST"])
-@login_required
+# @login_required
 def viewOrdersCSR(pID):
     user = session["username"]
     
