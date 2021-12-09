@@ -114,9 +114,9 @@ def homeCSR():
 def customerPage():
     return render_template('customerPage.html')
 
-@app.route('/viewOrdersCSR')
-def viewOrdersCSR():
-    return render_template('viewOrdersCSR.html')
+# @app.route('/viewOrdersCSR')
+# def viewOrdersCSR():
+#     return render_template('viewOrdersCSR.html')
 
 # Authenticates the login
 @app.route('/loginAuth', methods=['GET', 'POST'])
