@@ -1,6 +1,17 @@
+"""
+Here is our main flie where all of the app's core functionality is implemented.
+These functions bring together the front-end HTML templates and backend MYSQL
+servers to deliver a working Flask app. The main things covered by this file
+are registering and logging in customers and customer service representatives
+(CSR), creating an "anon-code" for customers to be uesd instead of their true
+identity, allow customers to upload their sensitive order details and info,
+allow CSRs to view orders and assist customers with them, and to allow CSRs to
+see a homepage of orders they are currently working on.
+"""
+
 # Import Flask Library
 # from flask import Flask, render_template, request, session, url_for, redirect
-#import only what we need
+# import only what we need
 from flask import *
 import pymysql.cursors
 # from flaskext.mysql import MySQL
@@ -21,7 +32,7 @@ from flask_bootstrap import Bootstrap
 # Initialize the app from Flask
 
 app = Flask(__name__,
-            static_url_path='', 
+            static_url_path='',
             static_folder='templates/static',
             template_folder='templates')
 
@@ -55,6 +66,9 @@ conn = pymysql.connect(
 
 # conn = connection.cursor()
 
+"""
+Thi is the MYSQL.
+"""
 # Configure MySQL
 # conn = pymysql.connect(host='localhost',
 #                        port = 8889,
@@ -68,7 +82,7 @@ conn = pymysql.connect(
 # if __name__ == '__main__':
 #     app.run(debug=True)                       
 
-# Define a route to hello function
+# Define a route to hello function - renders the initial landing page
 @app.route('/')
 def hello():
     return render_template('index.html')
@@ -82,7 +96,7 @@ def login_required(func):
         return func(*args, **kwargs)
     return dec
 
-# Define route for login, this can be used by both CSR and customer
+# Define login routes for both CSR and customer
 @app.route('/login')
 def login():
     return render_template('login.html')
@@ -91,7 +105,7 @@ def login():
 def loginCSR():
     return render_template('loginCSR.html') 
 
-# Define route for register for customer
+# Define routes to register as customer or CSR
 @app.route('/register')
 def register():
     return render_template('register.html')
@@ -100,16 +114,11 @@ def register():
 def registerCSR():
     return render_template('registerCSR.html')
 
-# Define route for register
+# Define routes to register as customer or CSR
 @app.route('/csrPage')
 def csrPage():
     return render_template('csrPage.html')
 
-@app.route('/homeCSR')
-def homeCSR():
-    return render_template('homeCSR.html')
-
-# Define route for register
 @app.route('/customerPage')
 def customerPage():
     return render_template('customerPage.html')
@@ -145,7 +154,7 @@ def loginAuth():
         error = 'Invalid login or username'
         return render_template('login.html', error=error)
 
-# Authenticates the login for CSR
+# Authenticates the login for the CSR
 @app.route('/loginAuthCSR', methods=['GET', 'POST'])
 def loginAuthCSR():
     # grabs information from the forms
@@ -172,6 +181,7 @@ def loginAuthCSR():
         return render_template('loginCSR.html', error=error)
 
 
+# Authenticates registration for a new customer
 # @app.route('/loginAuthCSR', methods=['GET', 'POST'])
 # def loginAuthCSR():
 #     # grabs information from the forms
